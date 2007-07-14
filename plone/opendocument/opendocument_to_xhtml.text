@@ -1,0 +1,69 @@
+
+Tests for opendocument_to_xhtml transform
+
+
+Some imports:
+
+    >>> import os
+    >>> import zipfile
+    >>> from zope.component import getGlobalSiteManager, queryUtility
+    >>> from zope.interface.verify import verifyClass
+    >>> from plone.transforms.interfaces import IMultipleOutputTransform
+    >>> from plone.opendocument.opendocument_to_xhtml import OpendocumentToXHTML
+    >>> import plone.opendocument.utils as utils 
+
+First we test that it fulfills the IMultipleOutputTransform interface: 
+    
+   >>> verifyClass(IMultipleOutputTransform, OpendocumentToXHTML)
+   True     
+
+Then we register and create the transform:
+
+    >>> gsm = getGlobalSiteManager()
+    >>> gsm.registerUtility(OpendocumentToXHTML(),
+    ...     IMultipleOutputTransform,
+    ...     name='opendocument_to_xhtml')
+
+    >>> util = queryUtility(IMultipleOutputTransform,
+    ...             name='opendocument_to_xhtml')
+    >>> util
+    <plone.opendocument.opendocument_to_xhtml.OpendocumentToXHTML instance at ...>
+
+A test file is not bad,
+
+    >>> data = zipfile.ZipFile(os.path.dirname(__file__) + ('/tests/input/test_odt.odt'))
+
+but we need to turn it into a generator first.
+
+    >>> dataIterator = utils.zipIterator(data)
+
+Now we can do an opendocument_to_xhtml transform
+
+    >>> result = OpendocumentToXHTML().transform(dataIterator)
+
+and check the first result stream 
+    
+    >>> outputDir = os.path.dirname(__file__) + ('/tests/output/test_odt')
+    >>> outputFile = file(outputDir + '/test_odt.html', 'w+b')
+    >>> for line in result['default']: 
+    ...             outputFile.write(line)
+    >>> result['default'].close()
+    >>> outputFile.seek(0)
+    >>> testFile = file(outputDir + '/test_odtOLD.html', 'r+b') 
+    >>> outputFile.read() == testFile.read()
+    True
+
+and the  second result stream:
+
+    >>> outputFile.close()
+    >>> testFile.close()
+    >>> result['default'].close()
+    >>> for picture in result['pictures']: 
+    ...             outputFile = file(outputDir + '/' + picture[0], 'w+b') 
+    ...             outputFile.write(picture[1].read())
+    ...             picture[1].close()
+    ...             outputFile.close()
+    >>> os.path.isfile(outputDir + '/10000000000000E2000000E2459CCEB9.gif')
+    True
+
+

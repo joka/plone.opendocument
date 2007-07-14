@@ -1,0 +1,47 @@
+
+Tests for opendocument_to_xhtml transform
+
+
+Some imports:
+
+    >>> import os
+    >>> import plone.opendocument.utils as utils 
+    >>> import zipfile
+
+Getting a test zip file and turn it into a generator:
+
+    >>> data = zipfile.ZipFile(os.path.dirname(__file__) + ('/tests/input/testZip.zip'))
+    >>> dataIterator = utils.zipIterator(data)
+    >>> dataIterator
+    <generator object at ...>
+
+Then we check that only files are iterated:
+
+    >>> files = {}
+    >>> filesCount = 0
+    >>> for file in dataIterator: 
+    ...         filesCount += 1
+    ...         files[file[0]] = file[1]
+    >>> filesCount == 1
+    True
+    >>> files['test.txt'].read()
+    'testfile\n'
+    >>> files['test.txt'].close() 
+
+
+
+
+
+
+
+
+ 
+
+ 
+
+9
+ 
+
+(Pdb) source = file('/var/lib/zope3/ploneoutTest/src/plone.opendocument/plone/opendocument/tests/input/test_odt.odt')   
+
+              

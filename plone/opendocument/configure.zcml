@@ -1,0 +1,15 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:five="http://namespaces.zope.org/five"
+    xmlns:zcml="http://namespaces.zope.org/zcml">
+
+    <!-- <five:registerPackage package="." initialize=".initialize" />-->
+
+    <utility
+        provides="plone.transforms.interfaces.IMultipleOutputTransform"
+        factory=".opendocument_to_xhtml.OpendocumentToXHTML"
+        name="plone.opendocument.opendocument_to_xhtml.OpendocumentToXHTM"
+        permission="zope.Public" /> 
+
+
+</configure>
