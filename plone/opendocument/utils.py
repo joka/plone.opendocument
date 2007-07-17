@@ -29,6 +29,7 @@ def zipIterator(zipfile):
                 filecontent =  StringIO()
                 filecontent.write(zipfile.read(path))
                 filecontent.seek(0)
+                path = os.path.normpath(os.path.normcase(path))
                 yield (path, filecontent)    
     except Exception,e:
         print e 
