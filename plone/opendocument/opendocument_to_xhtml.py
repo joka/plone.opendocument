@@ -3,12 +3,16 @@ import tempfile
 import os
 from StringIO import StringIO   
  
-from lxml import etree
 from zope.interface import implements
 from plone.transforms.interfaces import ITransform
 from plone.transforms.message import PloneMessageFactory as _
 from plone.transforms.interfaces import IMultipleOutputTransform
-#from zLOG import LOG, DEBUG
+
+HAS_LXML = True
+try: 
+    from lxml import etree
+except ImportError:
+    HAS_LXML = False 
 
 
 class OpendocumentToXHTML:

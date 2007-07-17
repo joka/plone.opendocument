@@ -5,6 +5,12 @@ try:
 except ImportError:
     from StringIO import StringIO
 
+HAS_PIL = True
+try: 
+    import PIL
+except ImportError:
+    HAS_PIL = False
+
 
 def zipIterator(zipfile):
     """
@@ -35,4 +41,16 @@ def zipIterator(zipfile):
         print e 
         raise StopIteration
 
- 
+
+def checkImage(image):
+    """
+    Asserts that the image file object is viewable by web browsers. If not so it tries
+    to convert to png.  object 
+
+    raises ValueError
+
+    returns image file object or None
+    """
+    return None
+
+
