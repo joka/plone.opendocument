@@ -1,12 +1,14 @@
 import zipfile    
-import tempfile
 import os
+import tempfile
+import shutil
 from StringIO import StringIO   
  
 from zope.interface import implements
 from plone.transforms.interfaces import ITransform
 from plone.transforms.message import PloneMessageFactory as _
 from plone.transforms.interfaces import IMultipleOutputTransform
+import plone.opendocument.utils as utils
 
 HAS_LXML = True
 try: 
@@ -35,7 +37,7 @@ class OpendocumentToXHTML:
 
     output = 'text/html'                                  
     
-    name = u'plone.opendocument.opendocument_to_xhtml.OpendocumentToXHT'
+    name = u'plone.opendocument.opendocument_to_xhtml.OpendocumentToXHTML'
 
     title = _(u'title_opendocument_to_xhtml',
         default=u"A transform which transforms opendocument files into HTML with XSL")
@@ -47,29 +49,36 @@ class OpendocumentToXHTML:
        
         outputStreams = {}
         outputStreams['default'] = StringIO()
-        outputStreams['pictures'] = {} 
+        outputStreams['pictures'] = [] 
         contentXML = StringIO()
 
-        tempdir = (tempfile.gettempdir() + '/plone_opendocument')
+        tempdir = (tempfile.gettempdir() + '/plone_opendocument/')
         if not os.path.exists(tempdir):
             os.mkdir(tempdir)
 
         try:
-            for file in data :
-                name = file[0]
-                content = file[1]
+            for d in data :
+                name = d[0]
+                content = d[1]
                 #getting content.xml
                 if (name == 'content.xml'):
                     contentXML = content
                 #getting pictures 
                 if (name.startswith('Pictures/')):
                     name = os.path.basename(name)
-                    temp = tempfile.TemporaryFile(dir=tempdir)
-                    temp.write(content.read())
-                    temp.seek(0)
-                    #TODO: Check graphic format
-                    outputStreams['pictures'][name] = temp
-            # transform content.xml into XHTML
+                    picture = file(tempdir + name,'w+b')
+                    shutil.copyfileobj(content, picture)
+                    picture.close()
+                    picture_ = utils.makeViewable(picture.name)
+                    #picture is not viewable with browser
+                    if not picture_:
+                        continue
+                    #picture has been converted to be viewable
+                    if not picture is picture_:
+                        pass
+                        #TODO:update contentXML
+                    outputStreams['pictures'].append(picture_)
+            #transform content.xml into XHTML
             sourceXML = etree.parse(contentXML)
             contentXML.close()
             stylesheetXML = etree.parse(self.xsl_stylesheet)
@@ -83,7 +92,7 @@ class OpendocumentToXHTML:
         except Exception, e:
             raise e
         
-        outputStreams['pictures'] = (outputStreams['pictures']).iteritems()
+        outputStreams['pictures'] = iter(outputStreams['pictures'])
         return outputStreams
 
         

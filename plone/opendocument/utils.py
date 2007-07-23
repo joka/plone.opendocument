@@ -7,7 +7,7 @@ except ImportError:
 
 HAS_PIL = True
 try: 
-    import PIL
+    import PIL.Image
 except ImportError:
     HAS_PIL = False
 
@@ -16,18 +16,19 @@ def zipIterator(zipfile):
     """
     Generator function, iterates all files in the ZipFile object.
 
+    zipfile -- ZipFile object argument
+
     raises ValueError, StopIteration
 
     returns tuples composed of file path string and file content StringIO
-    object.
+           object
     """
     if not isinstance(zipfile, ZipFile):
             raise ValueError, "zipfile must be a ZipFile object"
             
     if zipfile.testzip() is not None:
-        raise ValueError, \
-              "This zip file contains bad files "\
-              "(according to their CRCs)."
+        raise ValueError, "This zip file contains bad files \
+                           (according to their CRCs)."
     try:
         paths = zipfile.namelist()        
         for path in paths :
@@ -42,15 +43,46 @@ def zipIterator(zipfile):
         raise StopIteration
 
 
-def checkImage(image):
+def makeViewable(imagefile):
     """
-    Asserts that the image file object is viewable by web browsers. If not so it tries
-    to convert to png.  object 
+    Asserts that the given image file is viewable with web browsers ('PNG',
+    'GIF','JPEG', 'BMP') . If it's not viewable the function tries to 
+    convert it to png. A new file is created which has the suffix .png. The old
+    file is removed.
+    
+    imagefile -- file object argument, has to have a visible name in the file
+                 system
 
-    raises ValueError
+    raises IOError
 
-    returns image file object or None
+    returns path to image file or None
     """
+    viewable = ['PNG','GIF','JPEG', 'BMP']
+
+    if not isinstance(imagefile, str):
+        raise IOError, "The imagefile argument is no string."     
+
+    if not os.path.isfile(imagefile):
+        raise IOError, "The imagefile argument is no visble name in the \
+                        file system." 
+    
+    try:
+        image = PIL.Image.open(imagefile)
+        name, e = os.path.splitext(imagefile)
+        format = image.format
+        if format in viewable:
+            return imagefile
+        else: 
+            name_ = name + '.png'
+            image.save(name_, mode='RGB')
+            os.remove(imagefile)
+            return name_
+    except IOError, e:
+        if str(e) == 'cannot identify image file':
+            return None
+        else:
+            raise 
+        
     return None
 
 

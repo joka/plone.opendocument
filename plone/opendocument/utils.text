@@ -1,12 +1,16 @@
 
 Tests for opendocument_to_xhtml transform
-
+=========================================
 
 Some imports:
 
     >>> import os
     >>> import plone.opendocument.utils as utils 
     >>> import zipfile
+    >>> import PIL.Image
+
+Test zipIterator:
+-----------------
 
 Getting a test zip file and turn it into a generator:
 
@@ -19,29 +23,29 @@ Then we check that only files are iterated:
 
     >>> files = {}
     >>> filesCount = 0
-    >>> for file in dataIterator: 
+    >>> for f in dataIterator: 
     ...         filesCount += 1
-    ...         files[file[0]] = file[1]
+    ...         files[f[0]] = f[1]
     >>> filesCount == 1
     True
     >>> files['test.txt'].read()
     'testfile\n'
     >>> files['test.txt'].close() 
 
+Test makeViewable:
+-----------------
+    
+    >>> path = os.path.dirname(__file__) + '/tests/input/'
+    >>> viewable = path + 'viewable.png'
+    >>> viewable_ = utils.makeViewable(viewable)
+    >>> viewable is viewable_
+    True
+    >>> notViewable = path + 'notViewable.tiff'
+    >>> notViewable_ =  utils.makeViewable(notViewable)
+    >>> PIL.Image.open(path + 'notViewable.png').format   
+    'PNG'
+    >>> notSupported = path + 'notSupported.svg' 
+    >>> utils.makeViewable(notSupported)
+    
 
 
-
-
-
-
-
- 
-
- 
-
-9
- 
-
-(Pdb) source = file('/var/lib/zope3/ploneoutTest/src/plone.opendocument/plone/opendocument/tests/input/test_odt.odt')   
-
-              

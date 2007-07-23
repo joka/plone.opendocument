@@ -6,6 +6,8 @@ Some imports:
 
     >>> import os
     >>> import zipfile
+    >>> import shutil 
+    >>> import PIL.Image 
     >>> from zope.component import getGlobalSiteManager, queryUtility
     >>> from zope.interface.verify import verifyClass
     >>> from plone.transforms.interfaces import IMultipleOutputTransform
@@ -59,11 +61,11 @@ and the  second result stream:
     >>> testFile.close()
     >>> result['default'].close()
     >>> for picture in result['pictures']: 
-    ...             outputFile = file(outputDir + '/' + picture[0], 'w+b') 
-    ...             outputFile.write(picture[1].read())
-    ...             picture[1].close()
-    ...             outputFile.close()
-    >>> os.path.isfile(outputDir + '/10000000000000E2000000E2459CCEB9.gif')
+    ...             name = os.path.basename(picture)
+    ...             outputFile = outputDir + '/' + name
+    ...             shutil.copyfile(picture, outputFile)
+    >>> pic1 = PIL.Image.open(outputDir + '/10000000000000E2000000E2459CCEB9.gif')
+    >>> pic1.format == 'GIF'
     True
 
 
