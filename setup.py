@@ -6,8 +6,9 @@ version = '0.1'
 setup(name='plone.opendocument',
       version=version,
       description="",
-      long_description="""Transform from Opendocument text to html""",
+      long_description="""Transform from Opendocument to HTML""",
       classifiers=[
+        "License :: OSI Approved :: GNU General Public License (GPL)",
         "Framework :: Plone",
         "Framework :: Zope2",
         "Framework :: Zope3",
