@@ -24,15 +24,13 @@ class OpendocumentToXHTML:
     implements(IMultipleOutputTransform)
     
     inputs = ('application/vnd.oasis.opendocument.text',
-              'application/vnd.oasis.opendocument.text-master',
+             #'application/vnd.oasis.opendocument.text-master',
               'application/vnd.oasis.opendocument.text-template',
 	          'application/vnd.oasis.opendocument.text-web',
               'application/vnd.oasis.opendocument.spreadsheet',
               'application/vnd.oasis.opendocument.spreadsheet-template',
               'application/vnd.oasis.opendocument.presentation',
               'application/vnd.oasis.opendocument.presentation-template',
-              'application/vnd.oasis.opendocument.chart',
-              'application/vnd.oasis.opendocument.database',
              )
 
     output = 'text/html'                                  
