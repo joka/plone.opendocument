@@ -1,0 +1,22 @@
+<!DOCTYPE table:table SYSTEM "tables.dtd">
+
+
+<!-- Invisible rows -->
+
+<table:table>
+ <table:table-row>
+  <table:table-cell office:value-type="string">
+   <text:p>This row is visible</text:p>
+  </table:table-cell>
+ </table:table-row>
+ <table:table-row table:visibility="collapse">
+  <table:table-cell office:value-type="string">
+   <text:p>This row is invisible</text:p>
+  </table:table-cell>
+  </table:table-row>
+ <table:table-row>
+  <table:table-cell office:value-type="string">
+   <text:p>This row is visible again</text:p>
+  </table:table-cell>
+ </table:table-row>
+</table:table>

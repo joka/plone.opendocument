@@ -1,0 +1,38 @@
+<!DOCTYPE table:table SYSTEM "tables.dtd">
+
+<!-- Table with columns, second one is distinct -->
+
+<table:table>
+ <table:table-column />
+ <table:table-column table:visibility="collapsed" />
+ <table:table-column />
+ <table:table-column />
+ <table:table-row>
+  <table:table-cell office:value-type="float" office:value="3">
+   <text:p>3</text:p>
+  </table:table-cell>
+  <table:table-cell office:value-type="float" office:value="1">
+   <text:p>1</text:p>
+  </table:table-cell>
+  <table:table-cell office:value-type="float" office:value="4">
+   <text:p>4</text:p>
+  </table:table-cell>
+  <table:table-cell office:value-type="float" office:value="1">
+   <text:p>1</text:p>
+  </table:table-cell>
+ </table:table-row>
+ <table:table-row>
+  <table:table-cell office:value-type="float" office:value="5">
+   <text:p>5</text:p>
+  </table:table-cell>
+  <table:table-cell office:value-type="float" office:value="9">
+   <text:p>9</text:p>
+  </table:table-cell>
+  <table:table-cell office:value-type="float" office:value="2">
+   <text:p>2</text:p>
+  </table:table-cell>
+  <table:table-cell office:value-type="float" office:value="6">
+   <text:p>6</text:p>
+  </table:table-cell>
+ </table:table-row>
+</table:table>

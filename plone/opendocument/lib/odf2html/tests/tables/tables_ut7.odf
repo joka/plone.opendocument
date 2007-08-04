@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE table:table SYSTEM "tables.dtd">
+
+<!-- Visibility of column and row groups -->
+
+<table:table table:name="page1">
+ <table:table-column />
+ <table:table-column-group>
+ <table:table-column />
+ <table:table-column table:visibility="collapse" />
+ <table:table-column />
+ <table:table-column-group table:display="false">
+  <table:table-column table:visibility="collapse" table:number-columns-repeated="4" />
+ </table:table-column-group>
+ <table:table-column />
+ </table:table-column-group>
+ <table:table-column />
+ <table:table-row>
+ <table:table-cell>
+  <text:p>visible11</text:p>
+ </table:table-cell>
+ <table:table-cell>
+  <text:p>visible12</text:p>
+ </table:table-cell>
+ <table:table-cell>
+  <text:p>invisible</text:p>
+ </table:table-cell>
+ <table:table-cell>
+  <text:p>visible13</text:p>
+ </table:table-cell>
+ <table:table-cell table:number-columns-repeated="4">
+  <text:p>invisible</text:p>
+ </table:table-cell>
+ <table:table-cell>
+  <text:p>visible14</text:p>
+ </table:table-cell>
+ <table:table-cell>
+  <text:p>visible15</text:p>
+ </table:table-cell>
+ </table:table-row>
+ <table:table-row>
+ <table:table-cell>
+  <text:p>visible21</text:p>
+ </table:table-cell>
+ <table:table-cell>
+  <text:p>visible22</text:p>
+ </table:table-cell>
+ <table:table-cell>
+  <text:p>invisible</text:p>
+ </table:table-cell>
+ <table:table-cell>
+  <text:p>visible23</text:p>
+ </table:table-cell>
+ <table:table-cell table:number-columns-repeated="4">
+  <text:p>invisible</text:p>
+ </table:table-cell>
+ <table:table-cell>
+  <text:p>visible24</text:p>
+ </table:table-cell>
+ <table:table-cell>
+  <text:p>visible25</text:p>
+ </table:table-cell>
+ </table:table-row>
+ <table:table-row-group>
+ <table:table-row>
+  <table:table-cell>
+  <text:p>visible31</text:p>
+  </table:table-cell>
+  <table:table-cell>
+  <text:p>visible32</text:p>
+  </table:table-cell>
+  <table:table-cell>
+  <text:p>invisible</text:p>
+  </table:table-cell>
+  <table:table-cell>
+  <text:p>visible33</text:p>
+  </table:table-cell>
+  <table:table-cell table:number-columns-repeated="4">
+  <text:p>invisible</text:p>
+  </table:table-cell>
+  <table:table-cell>
+  <text:p>visible34</text:p>
+  </table:table-cell>
+  <table:table-cell>
+  <text:p>visible35</text:p>
+  </table:table-cell>
+ </table:table-row>
+ <table:table-row-group table:display="false">
+  <table:table-row>
+  <table:table-cell table:number-columns-repeated="10">
+   <text:p>invisible</text:p>
+  </table:table-cell>
+  </table:table-row>
+  <table:table-row>
+  <table:table-cell table:number-columns-repeated="10">
+   <text:p>invisible</text:p>
+  </table:table-cell>
+  </table:table-row>
+  <table:table-row>
+  <table:table-cell table:number-columns-repeated="10">
+   <text:p>invisible</text:p>
+  </table:table-cell>
+  </table:table-row>
+  <table:table-row>
+  <table:table-cell table:number-columns-repeated="10">
+   <text:p>invisible</text:p>
+  </table:table-cell>
+  </table:table-row>
+ </table:table-row-group>
+ <table:table-row>
+  <table:table-cell>
+  <text:p>visible41</text:p>
+  </table:table-cell>
+  <table:table-cell>
+  <text:p>visible42</text:p>
+  </table:table-cell>
+  <table:table-cell>
+  <text:p>invisible</text:p>
+  </table:table-cell>
+  <table:table-cell>
+  <text:p>visible43</text:p>
+  </table:table-cell>
+  <table:table-cell table:number-columns-repeated="4">
+  <text:p>invisible</text:p>
+  </table:table-cell>
+  <table:table-cell>
+  <text:p>visible44</text:p>
+  </table:table-cell>
+  <table:table-cell>
+  <text:p>visible45</text:p>
+  </table:table-cell>
+ </table:table-row>
+ <table:table-row  table:visibility="collapse">
+  <table:table-cell table:number-columns-repeated="10">
+  <text:p>invisible</text:p>
+  </table:table-cell>
+ </table:table-row>
+ <table:table-row>
+  <table:table-cell>
+  <text:p>visible51</text:p>
+  </table:table-cell>
+  <table:table-cell>
+  <text:p>visible52</text:p>
+  </table:table-cell>
+  <table:table-cell>
+  <text:p>invisible</text:p>
+  </table:table-cell>
+  <table:table-cell>
+  <text:p>visible53</text:p>
+  </table:table-cell>
+  <table:table-cell table:number-columns-repeated="4">
+  <text:p>invisible</text:p>
+  </table:table-cell>
+  <table:table-cell>
+  <text:p>visible54</text:p>
+  </table:table-cell>
+  <table:table-cell>
+  <text:p>visible55</text:p>
+  </table:table-cell>
+ </table:table-row>
+ </table:table-row-group>
+</table:table>

@@ -1,0 +1,30 @@
+<!DOCTYPE table:table SYSTEM "tables.dtd">
+
+<!-- Formulas -->
+
+<table:table>
+ <table:table-row>
+  <table:table-cell office:value-type="string">
+   <text:p>M</text:p>
+  </table:table-cell>
+  <table:table-cell office:value-type="string">
+   <text:p>C</text:p>
+  </table:table-cell>
+  <table:table-cell office:value-type="string">
+   <text:p>E</text:p>
+  </table:table-cell>
+  <table:table-cell table:number-columns-repeated="3"/>
+ </table:table-row>
+ <table:table-row>
+  <table:table-cell office:value-type="float" office:value="42">
+   <text:p>42</text:p>
+  </table:table-cell>
+  <table:table-cell office:value-type="float" office:value="300000000">
+   <text:p>3,00E+008</text:p>
+  </table:table-cell>
+  <table:table-cell table:formula="oooc:=[.A34] * [.B34]^2" office:value-type="float" office:value="3.78E+018">
+   <text:p>3,78E+018</text:p>
+  </table:table-cell>
+  <table:table-cell table:number-columns-repeated="3"/>
+ </table:table-row>
+</table:table>

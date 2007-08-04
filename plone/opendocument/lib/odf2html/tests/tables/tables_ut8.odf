@@ -1,0 +1,42 @@
+<!DOCTYPE table:table SYSTEM "tables.dtd">
+
+<table:table>
+ <table:table-header-columns>
+  <table:table-column/>
+ </table:table-header-columns>
+ <table:table-columns>
+  <table:table-column table:number-columns-repeated="2"/>
+ </table:table-columns>
+ <table:table-row>
+  <table:table-cell office:value-type="float" office:value="2">
+   <text:p>2</text:p>
+  </table:table-cell>
+  <table:table-cell table:number-columns-repeated="2" office:value-type="float" office:value="3">
+   <text:p>3</text:p>
+  </table:table-cell>
+ </table:table-row>
+ <table:table-row>
+  <table:table-cell office:value-type="float" office:value="3">
+   <text:p>3</text:p>
+  </table:table-cell>
+  <table:table-cell table:number-columns-repeated="2" office:value-type="float" office:value="2">
+   <text:p>2</text:p>
+  </table:table-cell>
+ </table:table-row>
+ <table:table-row>
+  <table:table-cell table:number-columns-repeated="2" office:value-type="float" office:value="2">
+   <text:p>2</text:p>
+  </table:table-cell>
+  <table:table-cell office:value-type="float" office:value="3">
+   <text:p>3</text:p>
+  </table:table-cell>
+ </table:table-row>
+ <table:table-row>
+  <table:table-cell office:value-type="float" office:value="3">
+   <text:p>3</text:p>
+  </table:table-cell>
+  <table:table-cell table:number-columns-repeated="2" office:value-type="float" office:value="2">
+   <text:p>2</text:p>
+  </table:table-cell>
+ </table:table-row>
+</table:table>

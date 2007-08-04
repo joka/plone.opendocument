@@ -1,0 +1,69 @@
+<!DOCTYPE table:table SYSTEM "tables.dtd">
+
+<!-- Row and column repetitions -->
+
+<table:table>
+ <table:table-row>
+  <table:table-cell office:value-type="string">
+   <text:p>UT1</text:p>
+  </table:table-cell>
+  <table:table-cell table:number-columns-repeated="3"/>
+ </table:table-row>
+ <table:table-row>
+  <table:table-cell office:value-type="string">
+   <text:p>This row should not be repeated</text:p>
+  </table:table-cell>
+  <table:table-cell table:number-columns-repeated="3"/>
+ </table:table-row>
+ <table:table-row>
+  <table:table-cell office:value-type="string">
+   <text:p>This row should not be repeated too</text:p>
+  </table:table-cell>
+  <table:table-cell table:number-columns-repeated="3"/>
+ </table:table-row>
+ <table:table-row>
+  <table:table-cell office:value-type="string">
+   <text:p>This row should not be repeated too</text:p>
+  </table:table-cell>
+  <table:table-cell table:number-columns-repeated="2"/>
+  <table:table-cell office:value-type="string">
+   <text:p>due to this</text:p>
+  </table:table-cell>
+ </table:table-row>
+ <table:table-row>
+  <table:table-cell office:value-type="string">
+   <text:p>Next empty row should be repeated 3 times</text:p>
+  </table:table-cell>
+  <table:table-cell table:number-columns-repeated="3"/>
+ </table:table-row>
+ <table:table-row table:number-rows-repeated="3">
+  <table:table-cell table:number-columns-repeated="4"/>
+ </table:table-row>
+ <table:table-row table:number-rows-repeated="4">
+  <table:table-cell office:value-type="string">
+   <text:p>This row should be repeated</text:p>
+  </table:table-cell>
+  <table:table-cell table:number-columns-repeated="2"/>
+  <table:table-cell office:value-type="string">
+   <text:p>4 times</text:p>
+  </table:table-cell>
+ </table:table-row>
+ <table:table-row>
+  <table:table-cell table:number-columns-repeated="4"/>
+ </table:table-row>
+ <table:table-row>
+  <table:table-cell office:value-type="string">
+   <text:p>And this row should not be repeated again</text:p>
+  </table:table-cell>
+  <table:table-cell table:number-columns-repeated="3"/>
+ </table:table-row>
+ <table:table-row>
+  <table:table-cell office:value-type="string">
+   <text:p>And this row should not be repeated again</text:p>
+  </table:table-cell>
+  <table:table-cell table:number-columns-repeated="2"/>
+  <table:table-cell office:value-type="string">
+   <text:p>and again</text:p>
+  </table:table-cell>
+ </table:table-row>
+</table:table>
