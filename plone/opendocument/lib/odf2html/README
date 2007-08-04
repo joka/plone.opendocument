@@ -1,0 +1,62 @@
+ODF2HTML Project- A XSL transformation suite for converting
+OpenDocument files into HTML.
+
+Copyright © 2006 Daniel Carrera, Alex Hudson, Roman Fordinal and
+Eugene Pirogorodov.
+Copyright © 2007 Plone Software Foundation
+
+This product is free software; you can redistribute it and/or
+modify it under the terms of the GNU Lesser General Public
+License as published by the Free Software Foundation; either
+version 2.1 of the License, or (at your option) any later version
+or under the Apache License version 2.0 as published by the Apache
+Software Foundation.
+
+This product is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+licenses for more details.
+
+Copies of both licenses are included as part of this distribution.
+
+Usage
+-----
+1) Creating the XSLT:
+
+make allinone -  Creates the XSLT all-in-one.xsl
+
+(Or you may just invoke "make", all-in-one.xsl is it's default target)
+
+2) Using the XSLT:
+
+Most users will want to install the 'odftools' package:
+
+http://opendocumentfellowship.org/development/projects/odftools
+
+For developers, you essentially want to run:
+
+  unzip mydocument.odt
+  xsltproc catenate.xsl content.xml > SingleFile.xml
+  xsltproc all-in-one.xsl SingleFile.xml > output.html
+
+Parameters
+----------
+These stylesheets are unable to work out every detail of the transformation,
+since they will vary from usage to usage. These parameters are:
+
+	param_baseuri
+
+		The base location of all the contents of the ODF file. Often,
+		this will be the directory in which the ODF file was unzipped.
+		This is required for image links to be correct,
+
+	param_track_changes
+
+		If given a true value (e.g. 1) the HTML output will show
+		deletions recorded through ODF's track-changes feature.
+		Insertions are not supported yet. Those will show up as
+		regular text with no special formatting.
+
+Pass parameters like this:
+
+  xsltproc --stringparam param_baseuri /home/joebloggs/unpackeddoc
