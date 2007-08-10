@@ -50,7 +50,7 @@ def makeViewable(imagefile):
     convert it to png. A new file is created which has the suffix .png. The old
     file is removed.
     
-    imagefile -- file object argument, has to have a visible name in the file
+    imagefile --  object argument, has to have a visible name in the file
                  system
 
     raises IOError
@@ -60,11 +60,11 @@ def makeViewable(imagefile):
     viewable = ['PNG','GIF','JPEG', 'BMP']
 
     if not isinstance(imagefile, str):
-        raise IOError, "The imagefile argument is no string."     
+        raise ValueError, "The imagefile argument is no string."     
 
     if not os.path.isfile(imagefile):
-        raise IOError, "The imagefile argument is no visble name in the \
-                        file system." 
+        raise ValueError, ("The imagefile argument '%s' is no visble name in the \
+                        file system." % (imagefile) )
     
     try:
         image = PIL.Image.open(imagefile)
