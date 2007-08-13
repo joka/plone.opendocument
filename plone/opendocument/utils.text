@@ -36,16 +36,26 @@ Test makeViewable:
 -----------------
     
     >>> path = os.path.dirname(__file__) + '/tests/input/'
-    >>> viewable = path + 'viewable.png'
+    >>> imageFileName = 'viewable.png' 
+    >>> imageFile = file(path + imageFileName, 'r+b')
+    >>> viewable = (imageFileName, imageFile)
     >>> viewable_ = utils.makeViewable(viewable)
-    >>> viewable is viewable_
+    >>> (viewable_[1] is viewable_[1]) and (viewable_[0] is viewable[0])
     True
-    >>> notViewable = path + 'notViewable.tiff'
-    >>> notViewable_ =  utils.makeViewable(notViewable)
-    >>> PIL.Image.open(path + 'notViewable.png').format   
+    >>> imageFile.close()
+    >>> imageFileName = 'notViewable.tiff' 
+    >>> imageFile = file(path + imageFileName, 'r+b')
+    >>> notViewable = (imageFileName, imageFile)
+    >>> notViewable_ = utils.makeViewable(notViewable)
+    >>> PIL.Image.open(notViewable_[1]).format   
     'PNG'
-    >>> notSupported = path + 'notSupported.svg' 
-    >>> utils.makeViewable(notSupported)
+    >>> notViewable_[0] == 'notViewable.png'
+    True
+    >>> imageFile.close()
+    >>> imageFileName = 'notSupported.svg' 
+    >>> imageFile = file(path + imageFileName, 'r+b')
+    >>> notSupported = (imageFileName, imageFile)
+    >>> notSupported_ = utils.makeViewable(notSupported)
     
-
+    >>> imageFile.close()
 

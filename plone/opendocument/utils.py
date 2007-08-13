@@ -1,5 +1,6 @@
 from zipfile import ZipFile
 import os
+import tempfile
 try:
     from cStringIO import StringIO
 except ImportError:
@@ -20,8 +21,8 @@ def zipIterator(zipfile):
 
     raises ValueError, StopIteration
 
-    returns tuples composed of file path string and file content StringIO
-           object
+    returns tuples composed of string (file path) and StringIO
+           object (file content)
     """
     if not isinstance(zipfile, ZipFile):
             raise ValueError, "zipfile must be a ZipFile object"
@@ -43,40 +44,47 @@ def zipIterator(zipfile):
         raise StopIteration
 
 
-def makeViewable(imagefile):
+def makeViewable((imageFileName, imageFile)):
     """
     Asserts that the given image file is viewable with web browsers ('PNG',
     'GIF','JPEG', 'BMP') . If it's not viewable the function tries to 
-    convert it to png. A new file is created which has the suffix .png. The old
-    file is removed.
-    
-    imagefile --  object argument, has to have a visible name in the file
-                 system
+    convert it to png. A new file (NamedTemporaryFile object) and file name (which has the suffix '.png'
+    is created. The old file is closed. If the image file format is not
+    supported by PIL it returns none.
 
-    raises IOError
+    imageFile -- image file like object argument, opend in binary mode if it
+                 has attribute 'mode'. 
+    imageFileName -- string argument, non empty file name of imageFile.
 
-    returns path to image file or None
+    raises IOError, ValueError
+
+    returns (imageFileName, imageFile) tuple or None
     """
-    viewable = ['PNG','GIF','JPEG', 'BMP']
+    viewable = ['PNG','GIF','JPEG']
 
-    if not isinstance(imagefile, str):
-        raise ValueError, "The imagefile argument is no string."     
-
-    if not os.path.isfile(imagefile):
-        raise ValueError, ("The imagefile argument '%s' is no visble name in the \
-                        file system." % (imagefile) )
+    if not (isinstance(imageFileName, str) | (imageFileName == '')):
+        raise ValueError, ("The imageFileName argument '%s' is no string or \
+                an empty string." % (imageFileName))
     
+    if ('mode' in (dir(imageFile))) and not ('b' in imageFile.mode):
+        raise ValueError, ("The imageFile argument is no file object in \
+                binary mode, the imageName argument is '%s'." % (imageFileName))
+
     try:
-        image = PIL.Image.open(imagefile)
-        name, e = os.path.splitext(imagefile)
+        imageFile.seek(0)
+        image = PIL.Image.open(imageFile)
+        name, e = os.path.splitext(imageFileName)
         format = image.format
         if format in viewable:
-            return imagefile
+            imageFile.seek(0)
+            return (imageFileName, imageFile)
         else: 
-            name_ = name + '.png'
-            image.save(name_, mode='RGB')
-            os.remove(imagefile)
-            return name_
+            imageFileName_ = name + '.png'
+            imageFile_ = tempfile.NamedTemporaryFile()
+            image.save(imageFile_, format='PNG', mode='RGB')
+            imageFile_.seek(0)
+            imageFile.close()
+            return (imageFileName_, imageFile_)
     except IOError, e:
         if str(e) == 'cannot identify image file':
             return None

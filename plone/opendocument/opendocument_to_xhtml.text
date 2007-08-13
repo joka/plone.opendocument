@@ -28,7 +28,7 @@ Then we register and create the transform:
 
     >>> util = queryUtility(IMultipleOutputTransform,
     ...             name='opendocument_to_xhtml')
-    >>> util
+    >>> util                                                      
     <plone.opendocument.opendocument_to_xhtml.OpendocumentToXHTML instance at ...>
 
 A test file is not bad,
@@ -60,10 +60,10 @@ and the  second result stream:
     >>> outputFile.close()
     >>> testFile.close()
     >>> result['default'].close()
-    >>> for picture in result['pictures']: 
-    ...             name = os.path.basename(picture)
-    ...             outputFile = outputDir + '/' + name
-    ...             shutil.copyfile(picture, outputFile)
+    >>> for imageFileName, imageFile in result['pictures']: 
+    ...             outputFile = file(outputDir + '/' + imageFileName, 'w+b')
+    ...             shutil.copyfileobj(imageFile, outputFile)
+    ...             outputFile.close()
     >>> pic1 = PIL.Image.open(outputDir + '/10000000000000E2000000E2459CCEB9.gif')
     >>> pic1.format == 'GIF'
     True

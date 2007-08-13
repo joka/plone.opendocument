@@ -47,7 +47,7 @@ class OpendocumentToXHTML:
        
         outputStreams = {}
         outputStreams['default'] = StringIO()
-        outputStreams['pictures'] = [] 
+        outputStreams['pictures'] = {} 
         contentXML = StringIO()
 
         tempdir = (tempfile.gettempdir() + '/plone_opendocument/')
@@ -63,19 +63,19 @@ class OpendocumentToXHTML:
                     contentXML = content
                 #getting pictures 
                 if (name.startswith('Pictures/')):
-                    name = os.path.basename(name)
-                    picture = file(tempdir + name,'w+b')
-                    shutil.copyfileobj(content, picture)
-                    picture.close()
-                    picture_ = utils.makeViewable(picture.name)
-                    #picture is not viewable with browser
-                    if not picture_:
+                    imageFileName = os.path.basename(name)
+                    imageFile = tempfile.NamedTemporaryFile()
+                    shutil.copyfileobj(content, imageFile)
+                    content.close()
+                    image  = utils.makeViewable((imageFileName, imageFile))
+                    #image is not viewable with browser
+                    if not image:
                         continue
-                    #picture has been converted to be viewable
-                    if not picture is picture_:
+                    #check if picture has been converted to be viewable)                    
+                    if not imageFileName is image[0]:
                         pass
                         #TODO:update contentXML
-                    outputStreams['pictures'].append(picture_)
+                    outputStreams['pictures'][image[0]] = image[1] 
             #transform content.xml into XHTML
             sourceXML = etree.parse(contentXML)
             contentXML.close()
@@ -90,7 +90,7 @@ class OpendocumentToXHTML:
         except Exception, e:
             raise e
         
-        outputStreams['pictures'] = iter(outputStreams['pictures'])
+        outputStreams['pictures'] = outputStreams['pictures'].iteritems()
         return outputStreams
 
         

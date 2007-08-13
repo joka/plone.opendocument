@@ -22,16 +22,10 @@ def opendocument_to_xhtmlTearDown(self):
     os.chdir(tempdir)
     map(os.remove, files)
     os.rmdir(tempdir)
-
+    os.remove(os.path.dirname(__file__) + '/output/test_odt/10000000000000E2000000E2459CCEB9.gif')
 def utilsTearDown(self):
-    tearDown()
-    tempdir = os.path.dirname(__file__) + '/input/'
-    image = tempdir + 'notViewable.png'
-    image_ = tempdir + 'notViewable.tiff'
-    PIL.Image.open(image).save(image_, format='TIFF')
-    os.remove(image)
-    
- 
+    pass
+
 def test_suite():
     global optionsflags
     suite = unittest.TestSuite()
