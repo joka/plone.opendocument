@@ -5,67 +5,82 @@ Tests for opendocument_to_xhtml transform
 Some imports:
 
     >>> import os
-    >>> import zipfile
     >>> import shutil 
+    >>> import codecs
     >>> import PIL.Image 
     >>> from zope.component import getGlobalSiteManager, queryUtility
     >>> from zope.interface.verify import verifyClass
-    >>> from plone.transforms.interfaces import IMultipleOutputTransform
+    >>> from plone.transforms.interfaces import ITransform
     >>> from plone.opendocument.opendocument_to_xhtml import OpendocumentToXHTML
     >>> import plone.opendocument.utils as utils 
 
 First we test that it fulfills the IMultipleOutputTransform interface: 
     
-   >>> verifyClass(IMultipleOutputTransform, OpendocumentToXHTML)
+   >>> verifyClass(ITransform, OpendocumentToXHTML)
    True     
 
 Then we register and create the transform:
 
     >>> gsm = getGlobalSiteManager()
     >>> gsm.registerUtility(OpendocumentToXHTML(),
-    ...     IMultipleOutputTransform,
-    ...     name='opendocument_to_xhtml')
-
-    >>> util = queryUtility(IMultipleOutputTransform,
-    ...             name='opendocument_to_xhtml')
+    ...     ITransform,
+    ...     name='plone.opendocument.opendocument_to_xhtml.OpendocumentToXHTML')
+    >>> util = queryUtility(ITransform,
+    ...             name='plone.opendocument.opendocument_to_xhtml.OpendocumentToXHTML')
     >>> util                                                      
-    <plone.opendocument.opendocument_to_xhtml.OpendocumentToXHTML instance at ...>
+    <plone.opendocument.opendocument_to_xhtml.OpendocumentToXHTML object at ...>
 
-A test file is not bad,
+A test file is not bad:
 
-    >>> data = zipfile.ZipFile(os.path.dirname(__file__) + ('/tests/input/test_odt.odt'))
-
-but we need to turn it into a generator first.
-
-    >>> dataIterator = utils.zipIterator(data)
+    >>> dataPath = os.path.join(os.path.dirname(__file__), 'tests/input/test_odt.odt')
+    >>> data = file(dataPath)
+    >>> type(data)
+    <type 'file'>
 
 Now we can do an opendocument_to_xhtml transform
 
-    >>> result = OpendocumentToXHTML().transform(dataIterator)
+    >>> result = OpendocumentToXHTML().transform(data)
 
-and check the first result stream 
+and check result.data
     
-    >>> outputDir = os.path.dirname(__file__) + ('/tests/output/test_odt')
-    >>> outputFile = file(outputDir + '/test_odt.html', 'w+b')
-    >>> for line in result['default']: 
+    >>> outputDir = os.path.join(os.path.dirname(__file__), 'tests/output/test_odt')
+    >>> outputFilePath = os.path.join(outputDir, 'test_odt.html')
+    >>> outputFile = codecs.open(outputFilePath, 'w+b', 'UTF-8')
+    >>> for line in result.data: 
     ...             outputFile.write(line)
-    >>> result['default'].close()
     >>> outputFile.seek(0)
-    >>> testFile = file(outputDir + '/test_odtOLD.html', 'r+b') 
+    >>> testFilePath = os.path.join(outputDir, 'test_odtOLD.html')
+    >>> testFile = codecs.open(testFilePath, 'r+b', 'UTF-8') 
     >>> outputFile.read() == testFile.read()
     True
 
-and the  second result stream:
+and result.subobjects
 
     >>> outputFile.close()
     >>> testFile.close()
-    >>> result['default'].close()
-    >>> for imageFileName, imageFile in result['pictures']: 
-    ...             outputFile = file(outputDir + '/' + imageFileName, 'w+b')
-    ...             shutil.copyfileobj(imageFile, outputFile)
-    ...             outputFile.close()
-    >>> pic1 = PIL.Image.open(outputDir + '/10000000000000E2000000E2459CCEB9.gif')
+    >>> result.data.close()
+    >>> imageName =  '10000000000000E2000000E2459CCEB9.gif'
+    >>> imageContent = result.subobjects[imageName]
+    >>> outputFilePath = os.path.join(outputDir, imageName)
+    >>> outputFile = file(outputFilePath, 'w+b')
+    >>> shutil.copyfileobj(imageContent, outputFile)
+    >>> outputFile.close()
+    >>> imageContent.close()
+    >>> pic1 = PIL.Image.open(os.path.join(outputDir, '10000000000000E2000000E2459CCEB9.gif'))
     >>> pic1.format == 'GIF'
     True
+
+and result.metadata
+    
+    >>> result.metadata
+    {u'meta:generator': u'hand made', u'dc:language': u'de-DE', u'meta:image-count': u'1', u'meta:object-count': u'0', u'meta:Info 4': u'Info 4', u'meta:Info 1': u'Info 1', u'meta:initial-creator': u'Joscha Kr\xfctzki', u'meta:creation-date': u'2005-11-04T11:59:56', u'meta:editing-cycles': u'18', u'meta:editing-duration': u'PT1H45M25S', u'dc:date': u'2006-03-26T16:21:14', u'meta:Info 2': u'Info 2', u'meta:character-count': u'1193', u'meta:word-count': u'203', u'meta:page-count': u'2', u'meta:Info 3': u'Info 3', u'meta:paragraph-count': u'79', u'meta:table-count': u'3'}
+
+
+and result.errors
+
+    >>> result.errors
+
+
+
 
 

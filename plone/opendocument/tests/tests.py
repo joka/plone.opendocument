@@ -10,6 +10,7 @@ from zope.component.testing import setUp, tearDown
 from zope.testing import doctest
 from zope.testing.doctestunit import DocFileSuite
 
+from plone.transforms.tests.utils import configurationSetUp
 from plone.opendocument import opendocument_to_xhtml, utils
 
 
@@ -17,12 +18,7 @@ optionflags = doctest.REPORT_ONLY_FIRST_FAILURE | doctest.ELLIPSIS | doctest.NOR
 
 def opendocument_to_xhtmlTearDown(self):
     tearDown()
-    tempdir = (tempfile.gettempdir() + '/plone_opendocument')
-    files = os.listdir(tempdir)
-    os.chdir(tempdir)
-    map(os.remove, files)
-    os.rmdir(tempdir)
-    os.remove(os.path.dirname(__file__) + '/output/test_odt/10000000000000E2000000E2459CCEB9.gif')
+    #os.remove(os.path.dirname(__file__) + '/output/test_odt/10000000000000E2000000E2459CCEB9.gif')
 def utilsTearDown(self):
     pass
 
@@ -34,6 +30,7 @@ def test_suite():
                              package='plone.opendocument', 
                              optionflags=optionflags,
                              tearDown=opendocument_to_xhtmlTearDown,
+                             setUp=configurationSetUp,
                              ))
         suite.addTest(DocFileSuite('utils.text',
                              package='plone.opendocument', 

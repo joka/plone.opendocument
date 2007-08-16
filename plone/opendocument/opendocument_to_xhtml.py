@@ -1,13 +1,19 @@
+# coding: utf-8 
+from logging import DEBUG
 import zipfile    
 import os
 import tempfile
 import shutil
-from StringIO import StringIO   
+from StringIO import StringIO 
+
  
 from zope.interface import implements
+
 from plone.transforms.interfaces import ITransform
 from plone.transforms.message import PloneMessageFactory as _
-from plone.transforms.interfaces import IMultipleOutputTransform
+from plone.transforms.stringiter import StringIter
+from plone.transforms.transform import TransformResult  
+from plone.transforms.log import log
 import plone.opendocument.utils as utils
 
 HAS_LXML = True
@@ -17,11 +23,11 @@ except ImportError:
     HAS_LXML = False 
 
 
-class OpendocumentToXHTML:
+class OpendocumentToXHTML(object):
     """
     XSL transform which transforms Opendocument into XHTML 
     """
-    implements(IMultipleOutputTransform)
+    implements(ITransform)
     
     inputs = ('application/vnd.oasis.opendocument.text',
              #'application/vnd.oasis.opendocument.text-master',
@@ -38,61 +44,203 @@ class OpendocumentToXHTML:
     name = u'plone.opendocument.opendocument_to_xhtml.OpendocumentToXHTML'
 
     title = _(u'title_opendocument_to_xhtml',
-        default=u"A transform which transforms opendocument files into HTML with XSL")
-    
+        default=u"Opendocument to XHTML transform with XSLT")
+   
+    description = _(u'description_markdown_transform',
+        default=u"A transform which transforms opendocument files into HTML \
+        with XSLT")
+
+    available = False
+
     xsl_stylesheet = os.path.join(os.getcwd(), os.path.dirname(__file__),\
-            'lib/libopendocument/document2xhtml.xsl')    
+            'lib/odf2html/all-in-one.xsl')    
+    
+                                             
+    result = None
+    data = tempfile.NamedTemporaryFile()
+    subobjects = {}
+    metadata = {}
+    errors = u'' 
+    
+    _dataFiles = {} 
+    _changedNames = {}
+
+    def __init__(self):
+        super(OpendocumentToXHTML, self).__init__()
+        if HAS_LXML:
+            self.available = True  
           
     def transform(self, data):  
+        '''
+        Transforms data (opendocument file) to XHTML. It returns an
+        TransformResult object.
+        '''
+        if not self.available:
+            log(DEBUG, "The LXML library is required to use the %s transform "
+                         % (self.name))
+            return None 
        
-        outputStreams = {}
-        outputStreams['default'] = StringIO()
-        outputStreams['pictures'] = {} 
-        contentXML = StringIO()
+        self._prepareTrans(data)
+        if not self._dataFiles: 
+            return none;
+        
+        try:
+            #XSL tranformation
+            parser = etree.XMLParser(remove_comments=True, remove_blank_text=True) 
+            #concate all xml files
+            contentXML = etree.parse(self._concatDataFiles(), parser)
+            contentXML.xinclude()
+            root = contentXML.getroot()
+            #adjust file paths
+            images = root.xpath("//draw:image", {'draw' :\
+                'urn:oasis:names:tc:opendocument:xmlns:drawing:1.0' })
 
-        tempdir = (tempfile.gettempdir() + '/plone_opendocument/')
-        if not os.path.exists(tempdir):
-            os.mkdir(tempdir)
+            for i in images:
+                imageName = i.get("{http://www.w3.org/1999/xlink}href")
+                imageName = os.path.basename(imageName)
+                if imageName in self._changedNames:
+                    imageName = self._changedNames[imageName]
+                i.set("{http://www.w3.org/1999/xlink}href", imageName) 
+            #extract meta data
+            self._getMetaData(contentXML)
+            #xslt transformation
+            stylesheetXML = etree.parse(self.xsl_stylesheet, parser)
+            resultXML = contentXML.xslt(stylesheetXML)
+            resultXML.write(self.data)
+            self.data.seek(0)        
+            for f in self._dataFiles.values():
+                f.close()
+             
+            self.result = TransformResult(self.data, 
+                                    subobjects=self.subobjects or {},
+                                    metadata=self.metadata or {},
+                                    errors=self.errors or None
+                                    ) 
+        except etree.LxmlError, e:
+            log(DEBUG,\
+                str(e) + ('\nlibxml error_log:\n') + str(e.error_log))
+            return None
+        except Exception, e:
+            log(DEBUG, str(e))
+            return None
+
+        return self.result 
+
+    def _prepareTrans(self, data):
+        '''
+        Extracts required files from data (opendocument file). They are stored
+        in self.subobjects and self._dataFiles.
+        ''' 
+        dataZip = zipfile.ZipFile(data)
+        dataIterator = utils.zipIterator(dataZip)
 
         try:
-            for d in data :
-                name = d[0]
-                content = d[1]
-                #getting content.xml
-                if (name == 'content.xml'):
-                    contentXML = content
+            for fileName, fileContent in dataIterator:
+                if (fileName == 'content.xml'):
+                    content = tempfile.NamedTemporaryFile()
+                    shutil.copyfileobj(fileContent, content)
+                    content.seek(0)
+                    self._dataFiles['content'] = content
+                    continue
+                if (fileName == 'styles.xml'):
+                    styles = tempfile.NamedTemporaryFile()
+                    shutil.copyfileobj(fileContent, styles)
+                    styles.seek(0)
+                    self._dataFiles['styles'] = styles
+                    continue
+                if (fileName == 'meta.xml'):
+                    meta = tempfile.NamedTemporaryFile()
+                    shutil.copyfileobj(fileContent, meta)
+                    meta.seek(0)
+                    self._dataFiles['meta'] = meta
+                    continue
                 #getting pictures 
-                if (name.startswith('Pictures/')):
-                    imageFileName = os.path.basename(name)
-                    imageFile = tempfile.NamedTemporaryFile()
-                    shutil.copyfileobj(content, imageFile)
-                    content.close()
-                    image  = utils.makeViewable((imageFileName, imageFile))
-                    #image is not viewable with browser
-                    if not image:
-                        continue
-                    #check if picture has been converted to be viewable)                    
-                    if not imageFileName is image[0]:
-                        pass
-                        #TODO:update contentXML
-                    outputStreams['pictures'][image[0]] = image[1] 
-            #transform content.xml into XHTML
-            sourceXML = etree.parse(contentXML)
-            contentXML.close()
-            stylesheetXML = etree.parse(self.xsl_stylesheet)
-            xslt = etree.XSLT(stylesheetXML) 
-            result = xslt(sourceXML)
-            resultHTML = xslt.tostring(result)
-            outputStreams['default'].write(resultHTML)
-            outputStreams['default'].seek(0)
-            #TODO: LOG(self.__name__, DEBUG, ...
-            #TODO: Validate HTML
-        except Exception, e:
-            raise e
-        
-        outputStreams['pictures'] = outputStreams['pictures'].iteritems()
-        return outputStreams
+                if (fileName.startswith('Pictures/')):
+                    imageName = os.path.basename(fileName)
+                    imageContent = tempfile.NamedTemporaryFile()
+                    shutil.copyfileobj(fileContent, imageContent)
+                    imageContent.seek(0)
+                    fileContent.close()
+                    #assert that the image is viewable with web browsers
+                    imageName_, imageContent = utils.makeViewable((imageName, imageContent))
+                    if not imageName_:
+                        self.errors = self.errors + u'''
+                                         Image file '%s' could not be make viewable \
+                                         with web browser.
+                                         ''' % (imageName)   
+                        continue  
+                    #check if image Name has changed                    
+                    if not imageName is imageName_:
+                        self._changedNames[imageName] = imageName_ 
 
-        
+                    self.subobjects[imageName_] = imageContent
+
+            data.close()
+            dataZip.close()        
+
+        except Exception, e:
+            self._dataFiles = None
+            self.subobjects = None
+            log(DEBUG, str(e))
+                    
+    def _concatDataFiles(self):
+        '''
+        Returns XML file that concatenates all files stored in self._dataFiles
+        with xi:include.
+        '''
+
+        includeXML = lambda x: (x in self._dataFiles) and \
+                        '<xi:include href="%s" />' % (self._dataFiles[x].name) 
+        concat = StringIO(
+              '''<?xml version='1.0' encoding='UTF-8'?>
+                 <office:document xmlns:xi="http://www.w3.org/2001/XInclude"
+                  xmlns:office="urn:oasis:names:tc:opendocument:xmlns:office:1.0">
+                    %s %s %s  
+                 </office:document>
+              ''' 
+              % (
+                  includeXML('meta') or ' ', 
+                  includeXML('styles') or ' ', 
+                  includeXML('content') or ' ', 
+                )
+            )                             
+
+        return concat
+    
+    def _getMetaData(self, contentXML):
+        '''
+        Extracts all opendocument meta data from contentXML (ElementTree
+        object) and stores it in self.metadata.
+        '''
+        root = contentXML.getroot()
+        Elements = root.xpath("//office:meta", {'office'\
+                :'urn:oasis:names:tc:opendocument:xmlns:office:1.0'})
+        for element in Elements:
+            meta = u'{urn:oasis:names:tc:opendocument:xmlns:meta:1.0}'
+            dc = u'{http://purl.org/dc/elements/1.1/}'
+            for m in element.iterchildren():
+                #regular elements
+                text = unicode(m.text).rstrip().lstrip()
+                prefix = unicode(m.prefix)
+                tag = unicode(m.tag)
+                tag = tag.replace(meta, u'')
+                tag =  tag.replace(dc, u'')
+                #<meta:user-defined> elements
+                if tag.endswith('user-defined'):
+                    tag = unicode(m.get(\
+                    '{urn:oasis:names:tc:opendocument:xmlns:meta:1.0}name'))
+                #<meta:document-statistic> elements
+                if tag.endswith('document-statistic'):
+                    for tag_, text_ in m.items():
+                        tag_ = unicode(tag_)
+                        tag_ = tag_.replace(meta, u'')
+                        text_ = unicode(text_).rstrip().lstrip()
+                        self.metadata['meta:' + tag_] = text_
+                    continue
+                #skip empty elements
+                if not m.text:
+                    continue
+
+                self.metadata[prefix + ':' + tag] = text
 
 

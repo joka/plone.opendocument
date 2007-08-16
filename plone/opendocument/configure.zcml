@@ -3,13 +3,10 @@
     xmlns:five="http://namespaces.zope.org/five"
     xmlns:zcml="http://namespaces.zope.org/zcml">
 
-    <!-- <five:registerPackage package="." initialize=".initialize" />-->
-
     <utility
-        provides="plone.transforms.interfaces.IMultipleOutputTransform"
+        provides="plone.transforms.interfaces.ITransform"
         factory=".opendocument_to_xhtml.OpendocumentToXHTML"
-        name="plone.opendocument.opendocument_to_xhtml.OpendocumentToXHTM"
+        name="plone.opendocument.opendocument_to_xhtml.OpendocumentToXHTML"
         permission="zope.Public" /> 
-
 
 </configure>

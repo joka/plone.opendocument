@@ -25,7 +25,7 @@ def zipIterator(zipfile):
            object (file content)
     """
     if not isinstance(zipfile, ZipFile):
-            raise ValueError, "zipfile must be a ZipFile object"
+            raise ValueError, "Zipfile argument must be a ZipFile object"
             
     if zipfile.testzip() is not None:
         raise ValueError, "This zip file contains bad files \
@@ -39,12 +39,11 @@ def zipIterator(zipfile):
                 filecontent.seek(0)
                 path = os.path.normpath(os.path.normcase(path))
                 yield (path, filecontent)    
-    except Exception,e:
-        print e 
-        raise StopIteration
+    except Exception, e:
+        raise e  
 
 
-def makeViewable((imageFileName, imageFile)):
+def makeViewable((imageName, imageContent)):
     """
     Asserts that the given image file is viewable with web browsers ('PNG',
     'GIF','JPEG', 'BMP') . If it's not viewable the function tries to 
@@ -52,39 +51,39 @@ def makeViewable((imageFileName, imageFile)):
     is created. The old file is closed. If the image file format is not
     supported by PIL it returns none.
 
-    imageFile -- image file like object argument, opend in binary mode if it
+    imageContent -- image file like object argument, opend in binary mode if it
                  has attribute 'mode'. 
-    imageFileName -- string argument, non empty file name of imageFile.
+    imageName -- string argument, non empty file name of imageContent.
 
     raises IOError, ValueError
 
-    returns (imageFileName, imageFile) tuple or None
+    returns (imageName, imageContent) tuple or None
     """
     viewable = ['PNG','GIF','JPEG']
 
-    if not (isinstance(imageFileName, str) | (imageFileName == '')):
-        raise ValueError, ("The imageFileName argument '%s' is no string or \
-                an empty string." % (imageFileName))
+    if not (isinstance(imageName, str) | (imageName == '')):
+        raise ValueError, ("The imageName argument '%s' is no string or \
+                an empty string." % (imageName))
     
-    if ('mode' in (dir(imageFile))) and not ('b' in imageFile.mode):
-        raise ValueError, ("The imageFile argument is no file object in \
-                binary mode, the imageName argument is '%s'." % (imageFileName))
+    if ('mode' in (dir(imageContent))) and not ('b' in imageContent.mode):
+        raise ValueError, ("The imageContent argument is no file object in \
+                binary mode, the imageName argument is '%s'." % (imageName))
 
     try:
-        imageFile.seek(0)
-        image = PIL.Image.open(imageFile)
-        name, e = os.path.splitext(imageFileName)
+        imageContent.seek(0)
+        image = PIL.Image.open(imageContent)
+        name, e = os.path.splitext(imageName)
         format = image.format
         if format in viewable:
-            imageFile.seek(0)
-            return (imageFileName, imageFile)
+            imageContent.seek(0)
+            return (imageName, imageContent)
         else: 
-            imageFileName_ = name + '.png'
-            imageFile_ = tempfile.NamedTemporaryFile()
-            image.save(imageFile_, format='PNG', mode='RGB')
-            imageFile_.seek(0)
-            imageFile.close()
-            return (imageFileName_, imageFile_)
+            imageName_ = name + '.png'
+            imageContent_ = tempfile.NamedTemporaryFile()
+            image.save(imageContent_, format='PNG', mode='RGB')
+            imageContent_.seek(0)
+            imageContent.close()
+            return (imageName_, imageContent_)
     except IOError, e:
         if str(e) == 'cannot identify image file':
             return None
