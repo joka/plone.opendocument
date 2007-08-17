@@ -25,12 +25,11 @@ except ImportError:
 
 class OpendocumentToXHTML(object):
     """
-    XSL transform which transforms Opendocument into XHTML 
+    XSL transform which transforms OpenDocument files into XHTML 
     """
     implements(ITransform)
     
     inputs = ('application/vnd.oasis.opendocument.text',
-             #'application/vnd.oasis.opendocument.text-master',
               'application/vnd.oasis.opendocument.text-template',
 	          'application/vnd.oasis.opendocument.text-web',
               'application/vnd.oasis.opendocument.spreadsheet',
@@ -44,11 +43,11 @@ class OpendocumentToXHTML(object):
     name = u'plone.opendocument.opendocument_to_xhtml.OpendocumentToXHTML'
 
     title = _(u'title_opendocument_to_xhtml',
-        default=u"Opendocument to XHTML transform with XSLT")
+        default=u"OpenDocument to XHTML transform with XSL")
    
     description = _(u'description_markdown_transform',
-        default=u"A transform which transforms opendocument files into HTML \
-        with XSLT")
+        default=u"A transform which transforms OpenDocument files into XHTML \
+        with XSL")
 
     available = False
 
@@ -56,7 +55,6 @@ class OpendocumentToXHTML(object):
             'lib/odf2html/all-in-one.xsl')    
     
                                              
-    result = None
     data = tempfile.NamedTemporaryFile()
     subobjects = {}
     metadata = {}
@@ -72,7 +70,7 @@ class OpendocumentToXHTML(object):
           
     def transform(self, data):  
         '''
-        Transforms data (opendocument file) to XHTML. It returns an
+        Transforms data (OpenDocument file) to XHTML. It returns an
         TransformResult object.
         '''
         if not self.available:
@@ -84,14 +82,16 @@ class OpendocumentToXHTML(object):
         if not self._dataFiles: 
             return none;
         
+        result = None
+        
+        #XSL tranformation
         try:
-            #XSL tranformation
             parser = etree.XMLParser(remove_comments=True, remove_blank_text=True) 
-            #concate all xml files
+            #concatenate all xml files
             contentXML = etree.parse(self._concatDataFiles(), parser)
             contentXML.xinclude()
-            root = contentXML.getroot()
             #adjust file paths
+            root = contentXML.getroot()
             images = root.xpath("//draw:image", {'draw' :\
                 'urn:oasis:names:tc:opendocument:xmlns:drawing:1.0' })
 
@@ -111,7 +111,7 @@ class OpendocumentToXHTML(object):
             for f in self._dataFiles.values():
                 f.close()
              
-            self.result = TransformResult(self.data, 
+            result = TransformResult(self.data, 
                                     subobjects=self.subobjects or {},
                                     metadata=self.metadata or {},
                                     errors=self.errors or None
@@ -124,7 +124,7 @@ class OpendocumentToXHTML(object):
             log(DEBUG, str(e))
             return None
 
-        return self.result 
+        return result 
 
     def _prepareTrans(self, data):
         '''
@@ -136,6 +136,7 @@ class OpendocumentToXHTML(object):
 
         try:
             for fileName, fileContent in dataIterator:
+                #getting data files
                 if (fileName == 'content.xml'):
                     content = tempfile.NamedTemporaryFile()
                     shutil.copyfileobj(fileContent, content)
@@ -154,7 +155,7 @@ class OpendocumentToXHTML(object):
                     meta.seek(0)
                     self._dataFiles['meta'] = meta
                     continue
-                #getting pictures 
+                #getting images 
                 if (fileName.startswith('Pictures/')):
                     imageName = os.path.basename(fileName)
                     imageContent = tempfile.NamedTemporaryFile()
@@ -169,7 +170,7 @@ class OpendocumentToXHTML(object):
                                          with web browser.
                                          ''' % (imageName)   
                         continue  
-                    #check if image Name has changed                    
+                    #check if imageName has changed                    
                     if not imageName is imageName_:
                         self._changedNames[imageName] = imageName_ 
 
@@ -185,7 +186,7 @@ class OpendocumentToXHTML(object):
                     
     def _concatDataFiles(self):
         '''
-        Returns XML file that concatenates all files stored in self._dataFiles
+        Returns XML file object that concatenates all files stored in self._dataFiles
         with xi:include.
         '''
 
@@ -209,12 +210,17 @@ class OpendocumentToXHTML(object):
     
     def _getMetaData(self, contentXML):
         '''
-        Extracts all opendocument meta data from contentXML (ElementTree
+        Extracts all OpenDocument meta data from contentXML (ElementTree
         object) and stores it in self.metadata.
         '''
         root = contentXML.getroot()
         Elements = root.xpath("//office:meta", {'office'\
                 :'urn:oasis:names:tc:opendocument:xmlns:office:1.0'})
+        if not Elements:
+            self.errors = self.errors + u'''
+                             There is no <office:meta> element to extract \
+                             meta data. 
+                             '''  
         for element in Elements:
             meta = u'{urn:oasis:names:tc:opendocument:xmlns:meta:1.0}'
             dc = u'{http://purl.org/dc/elements/1.1/}'
