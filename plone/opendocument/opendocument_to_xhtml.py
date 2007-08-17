@@ -61,7 +61,7 @@ class OpendocumentToXHTML(object):
     errors = u'' 
     
     _dataFiles = {} 
-    _changedNames = {}
+    _imageNames = {}
 
     def __init__(self):
         super(OpendocumentToXHTML, self).__init__()
@@ -94,12 +94,17 @@ class OpendocumentToXHTML(object):
             root = contentXML.getroot()
             images = root.xpath("//draw:image", {'draw' :\
                 'urn:oasis:names:tc:opendocument:xmlns:drawing:1.0' })
-
             for i in images:
                 imageName = i.get("{http://www.w3.org/1999/xlink}href")
                 imageName = os.path.basename(imageName)
-                if imageName in self._changedNames:
-                    imageName = self._changedNames[imageName]
+                if not self._imageNames.has_key(imageName):
+                    self.errors = self.errors + u'''
+                                 Image file '%s' does not exist. Maybe it is\
+                                 not embedded in OpenDocument file?
+                                 ''' % (imageName)   
+                    i.set("{http://www.w3.org/1999/xlink}href", imageName) 
+                    continue
+                imageName = self._imageNames[imageName]
                 i.set("{http://www.w3.org/1999/xlink}href", imageName) 
             #extract meta data
             self._getMetaData(contentXML)
@@ -156,7 +161,7 @@ class OpendocumentToXHTML(object):
                     self._dataFiles['meta'] = meta
                     continue
                 #getting images 
-                if (fileName.startswith('Pictures/')):
+                if ('Pictures/' in fileName):
                     imageName = os.path.basename(fileName)
                     imageContent = tempfile.NamedTemporaryFile()
                     shutil.copyfileobj(fileContent, imageContent)
@@ -170,10 +175,8 @@ class OpendocumentToXHTML(object):
                                          with web browser.
                                          ''' % (imageName)   
                         continue  
-                    #check if imageName has changed                    
-                    if not imageName is imageName_:
-                        self._changedNames[imageName] = imageName_ 
-
+                    #store image                    
+                    self._imageNames[imageName] = imageName_ 
                     self.subobjects[imageName_] = imageContent
 
             data.close()

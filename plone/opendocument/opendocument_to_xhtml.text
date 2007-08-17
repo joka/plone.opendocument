@@ -7,7 +7,8 @@ Some imports:
     >>> import os
     >>> import shutil 
     >>> import PIL.Image 
-    >>> from zope.component import getGlobalSiteManager, queryUtility
+    >>> from zope.component import queryUtility
+    >>> from zope.component import getGlobalSiteManager  
     >>> from zope.interface.verify import verifyClass
     >>> from plone.transforms.interfaces import ITransform
     >>> from plone.opendocument.opendocument_to_xhtml import OpendocumentToXHTML
@@ -26,7 +27,7 @@ Then we register and create the transform:
     ...     name='plone.opendocument.opendocument_to_xhtml.OpendocumentToXHTML')
     >>> util = queryUtility(ITransform,
     ...             name='plone.opendocument.opendocument_to_xhtml.OpendocumentToXHTML')
-    >>> util                                                      
+    >>> util
     <plone.opendocument.opendocument_to_xhtml.OpendocumentToXHTML object at ...>
 
 A test file is not bad:
@@ -45,19 +46,15 @@ and check result.data
     >>> outputDir = os.path.join(os.path.dirname(__file__), 'tests/output/test_odt')
     >>> outputFilePath = os.path.join(outputDir, 'test_odt.html')
     >>> outputFile = file(outputFilePath, 'w+b')
-    >>> for line in result.data: 
-    ...             outputFile.write(line)
-    >>> outputFile.seek(0)
+    >>> shutil.copyfileobj(result.data, outputFile)
+    >>> outputFile.close()
+    >>> result.data.close()
     >>> testFilePath = os.path.join(outputDir, 'test_odtOLD.html')
-    >>> testFile = file(testFilePath, 'r+b') 
-    >>> outputFile.read() == testFile.read()
+    >>> os.path.getsize(testFilePath) == os.path.getsize(outputFilePath)
     True
 
 and result.subobjects
 
-    >>> outputFile.close()
-    >>> testFile.close()
-    >>> result.data.close()
     >>> imageName =  '10000000000000E2000000E2459CCEB9.gif'
     >>> imageContent = result.subobjects[imageName]
     >>> outputFilePath = os.path.join(outputDir, imageName)
