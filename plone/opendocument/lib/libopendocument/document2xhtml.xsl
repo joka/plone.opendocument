@@ -9,7 +9,7 @@
     Copyright (C) 2005-2006 J. David Eisenberg <catcode@catcode.com>
     Copyright (C) 2005-2006 Arend van Beelen jr. <arend@auton.nl>
     Copyright (C) 2006 Thierry Benita <tbenita@atreal.net>
-    Copyright (C) 2005-2006 Plone Foundation <plone-developers@lists.sourceforge.net>
+    Copyright (C) 2007 Plone Foundation <plone-developers@lists.sourceforge.net>
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Lesser General Public
