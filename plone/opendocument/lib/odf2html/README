@@ -3,7 +3,9 @@ OpenDocument files into HTML.
 
 Copyright © 2006 Daniel Carrera, Alex Hudson, Roman Fordinal and
 Eugene Pirogorodov.
-Copyright © 2007 Plone Software Foundation
+Copyright @ 2007 Plone Foundation <plone-developers@lists.sourceforge.net>
+Changes by Plone Foundation are based on http://opendocumentfellowship.org/repos/odf2html, 
+svn r338 2007-02-15.
 
 This product is free software; you can redistribute it and/or
 modify it under the terms of the GNU Lesser General Public

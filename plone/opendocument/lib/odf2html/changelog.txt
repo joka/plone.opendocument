@@ -1,21 +1,22 @@
 03.August 2007
 -------------
 * list.xsl: added text:list-level-style-image template
-  test file: lists_05.odt
+  test file: tests/text/lists_05.odt
 
 02.August 2007
 -------------
 * list.xsl: fixed text:list-level-style-bullet/@text:level, did not work with
             libxslt 1.1.19
-  test file lists_1.odt
+  test file tests/text/lists_1.odt
 * list.xsl: fixed text:list-level-style-number/@text:level, did not work with
             libxslt 1.1.19                                    
-  test file lists_2.odt 
+  test file tests/text/lists_2.odt 
 * list.xsl: added list-header template
-  test file lists_3.odt 
+  test file tests/text/lists_3.odt 
 * list.xsl, css.xls: support for list level wrappers. List items that have no text:h or
                       text:p child are just list level wrappers. They don't need list marker.
-  test file: lists_4.odt
+  test file: tests/text/lists_4.odt
+
 28.July 2007 
 ------------
 * attribute.xsl: added subtracted-length-values template
@@ -24,7 +25,7 @@
 ------------
 * attribute.xsl: added-length-values template
 * list.xsl: added @text:space-before template
-  test file lists_1.odt
+  test file tests/text/lists_1.odt
 
 20. July 2007
 -----------
@@ -32,7 +33,7 @@
   to make test files letter.odt and invoice.ods work. I think this behavior is more similar
   to openoffice.org.
 * common.xsl: added support for "in" length unit
-  test file letter.odt
-  test file invoice.ods    
+  test file tests/commonUseCases/letter.odt
+  test file tests/commonUseCases/invoice.ods    
  
 
