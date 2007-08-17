@@ -6,7 +6,6 @@ Some imports:
 
     >>> import os
     >>> import shutil 
-    >>> import codecs
     >>> import PIL.Image 
     >>> from zope.component import getGlobalSiteManager, queryUtility
     >>> from zope.interface.verify import verifyClass
@@ -45,12 +44,12 @@ and check result.data
     
     >>> outputDir = os.path.join(os.path.dirname(__file__), 'tests/output/test_odt')
     >>> outputFilePath = os.path.join(outputDir, 'test_odt.html')
-    >>> outputFile = codecs.open(outputFilePath, 'w+b', 'UTF-8')
+    >>> outputFile = file(outputFilePath, 'w+b')
     >>> for line in result.data: 
     ...             outputFile.write(line)
     >>> outputFile.seek(0)
     >>> testFilePath = os.path.join(outputDir, 'test_odtOLD.html')
-    >>> testFile = codecs.open(testFilePath, 'r+b', 'UTF-8') 
+    >>> testFile = file(testFilePath, 'r+b') 
     >>> outputFile.read() == testFile.read()
     True
 
