@@ -22,7 +22,7 @@ except ImportError:
     HAS_LXML = False 
 
 
-class OpendocumentToXHTML(object):
+class OpendocumentHtmlTransform(object):
     """
     XSL transform which transforms OpenDocument files into XHTML 
     """
@@ -39,9 +39,9 @@ class OpendocumentToXHTML(object):
 
     output = 'text/html'                                  
     
-    name = u'plone.opendocument.opendocument_to_xhtml.OpendocumentToXHTML'
+    name = u'plone.opendocument.opendocument_html_xslt.OpendocumentHtmlTransform'
 
-    title = _(u'title_opendocument_to_xhtml',
+    title = _(u'title_opendocument_html_xslt',
         default=u"OpenDocument to XHTML transform with XSL")
    
     description = _(u'description_markdown_transform',
@@ -53,6 +53,7 @@ class OpendocumentToXHTML(object):
     xsl_stylesheet = os.path.join(os.getcwd(), os.path.dirname(__file__),\
             'lib/odf2html/all-in-one.xsl')    
     
+    xsl_stylesheet_param = {}
                                              
     data = tempfile.NamedTemporaryFile()
     subobjects = {}
@@ -63,9 +64,14 @@ class OpendocumentToXHTML(object):
     _imageNames = {}
 
     def __init__(self):
-        super(OpendocumentToXHTML, self).__init__()
+        super(OpendocumentHtmlTransform, self).__init__()
         if HAS_LXML:
             self.available = True  
+        self.xsl_stylesheet_param = {
+                'param_track_changes':"0",#display version changes
+                'param_no_css':"0", #don't make css styles
+                'scale':"1", #scale font size, (non zero integer value)
+                }
           
     def transform(self, data):  
         '''
@@ -111,7 +117,7 @@ class OpendocumentToXHTML(object):
             #xslt transformation
             stylesheetXML = etree.parse(self.xsl_stylesheet, parser)
             xslt = etree.XSLT(stylesheetXML)
-            resultXML = xslt(contentXML)
+            resultXML = xslt(contentXML, **self.xsl_stylesheet_param) 
             resultXML.write(self.data)
             self.data.seek(0)      
             #log non fatal errors and warnings

@@ -1,13 +1,13 @@
 
-Tests for opendocument_to_xhtml transform
+Tests for opendocument_html_xslt transform
 
 
 First we test that it fulfills the ITransform interface: 
     
    >>> from plone.transforms.interfaces import ITransform
-   >>> from plone.opendocument.opendocument_to_xhtml import OpendocumentToXHTML
+   >>> from plone.opendocument.opendocument_html_xslt import OpendocumentHtmlTransform
    >>> from zope.interface.verify import verifyClass
-   >>> verifyClass(ITransform, OpendocumentToXHTML)
+   >>> verifyClass(ITransform, OpendocumentHtmlTransform)
    True     
 
 Then we register and create the transform:
@@ -17,9 +17,9 @@ Then we register and create the transform:
     >>> from zope.component import queryUtility
     >>> XMLConfig('configure.zcml', plone.opendocument)()
     >>> util = queryUtility(ITransform,
-    ...             name='plone.opendocument.opendocument_to_xhtml.OpendocumentToXHTML')
+    ...             name='plone.opendocument.opendocument_html_xslt.OpendocumentHtmlTransform')
     >>> util
-    <plone.opendocument.opendocument_to_xhtml.OpendocumentToXHTML object at ...>
+    <plone.opendocument.opendocument_html_xslt.OpendocumentHtmlTransform object at ...>
 
 A test file is not bad:
 
@@ -29,9 +29,9 @@ A test file is not bad:
     >>> type(data)
     <type 'file'>
 
-Now we can do an opendocument_to_xhtml transform:
+Now we can do an opendocument_html_xslt transform:
 
-    >>> result = OpendocumentToXHTML().transform(data)
+    >>> result = OpendocumentHtmlTransform().transform(data)
 
 To check the reslult we need some imports to handle files:
 
