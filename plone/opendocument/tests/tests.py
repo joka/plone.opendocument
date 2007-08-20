@@ -1,12 +1,8 @@
 import unittest
-import os
-import tempfile 
-import PIL.Image
 
-from zope.component.testing import setUp, tearDown
+from zope.component.testing import tearDown
 from zope.testing import doctest
 from zope.testing.doctestunit import DocFileSuite
-from zope.configuration.xmlconfig import XMLConfig
 
 from plone.transforms.tests.utils import configurationSetUp
 from plone.opendocument import opendocument_to_xhtml, utils
@@ -27,8 +23,6 @@ def test_suite():
             doctest.DocFileSuite('utils.text',
                                  package='plone.opendocument', 
                                  optionflags=optionflags,
-                                 tearDown=tearDown,
-                                 setUp=setUp,    
                                  )
             ])
    else:

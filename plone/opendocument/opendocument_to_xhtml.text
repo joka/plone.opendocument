@@ -2,29 +2,20 @@
 Tests for opendocument_to_xhtml transform
 
 
-Some imports:
-
-    >>> import os
-    >>> import shutil 
-    >>> import PIL.Image 
-    >>> from zope.component import queryUtility
-    >>> from zope.component import getGlobalSiteManager  
-    >>> from zope.interface.verify import verifyClass
-    >>> from plone.transforms.interfaces import ITransform
-    >>> from plone.opendocument.opendocument_to_xhtml import OpendocumentToXHTML
-    >>> import plone.opendocument.utils as utils 
-
-First we test that it fulfills the IMultipleOutputTransform interface: 
+First we test that it fulfills the ITransform interface: 
     
+   >>> from plone.transforms.interfaces import ITransform
+   >>> from plone.opendocument.opendocument_to_xhtml import OpendocumentToXHTML
+   >>> from zope.interface.verify import verifyClass
    >>> verifyClass(ITransform, OpendocumentToXHTML)
    True     
 
 Then we register and create the transform:
 
-    >>> gsm = getGlobalSiteManager()
-    >>> gsm.registerUtility(OpendocumentToXHTML(),
-    ...     ITransform,
-    ...     name='plone.opendocument.opendocument_to_xhtml.OpendocumentToXHTML')
+    >>> from zope.configuration.xmlconfig import XMLConfig
+    >>> import plone.opendocument
+    >>> from zope.component import queryUtility
+    >>> XMLConfig('configure.zcml', plone.opendocument)()
     >>> util = queryUtility(ITransform,
     ...             name='plone.opendocument.opendocument_to_xhtml.OpendocumentToXHTML')
     >>> util
@@ -32,16 +23,22 @@ Then we register and create the transform:
 
 A test file is not bad:
 
+    >>> import os
     >>> dataPath = os.path.join(os.path.dirname(__file__), 'tests/input/test_odt.odt')
     >>> data = file(dataPath)
     >>> type(data)
     <type 'file'>
 
-Now we can do an opendocument_to_xhtml transform
+Now we can do an opendocument_to_xhtml transform:
 
     >>> result = OpendocumentToXHTML().transform(data)
 
-and check result.data
+To check the reslult we need some imports to handle files:
+
+    >>> import shutil 
+    >>> import PIL.Image 
+
+Now we can check result.data
     
     >>> outputDir = os.path.join(os.path.dirname(__file__), 'tests/output/test_odt')
     >>> outputFilePath = os.path.join(outputDir, 'test_odt.html')
@@ -55,7 +52,7 @@ and check result.data
 
 and result.subobjects
 
-    >>> imageName =  '10000000000000E2000000E2459CCEB9.gif'
+    >>> imageName = '10000000000000E2000000E2459CCEB9.gif'
     >>> imageContent = result.subobjects[imageName]
     >>> outputFilePath = os.path.join(outputDir, imageName)
     >>> outputFile = file(outputFilePath, 'w+b')
