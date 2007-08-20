@@ -22,7 +22,7 @@ except ImportError:
     HAS_LXML = False 
 
 
-class OpendocumentHtmlTransform(object):
+class OpendocumentHtmlXsltTransform(object):
     """
     XSL transform which transforms OpenDocument files into XHTML 
     """
@@ -39,7 +39,7 @@ class OpendocumentHtmlTransform(object):
 
     output = 'text/html'                                  
     
-    name = u'plone.opendocument.opendocument_html_xslt.OpendocumentHtmlTransform'
+    name = u'plone.opendocument.opendocument_html_xslt.OpendocumentHtmlXsltTransform'
 
     title = _(u'title_opendocument_html_xslt',
         default=u"OpenDocument to XHTML transform with XSL")
@@ -64,7 +64,7 @@ class OpendocumentHtmlTransform(object):
     _imageNames = {}
 
     def __init__(self):
-        super(OpendocumentHtmlTransform, self).__init__()
+        super(OpendocumentHtmlXsltTransform, self).__init__()
         if HAS_LXML:
             self.available = True  
         self.xsl_stylesheet_param = {

@@ -5,8 +5,8 @@
 
     <utility
         provides="plone.transforms.interfaces.ITransform"
-        factory=".opendocument_html_xslt.OpendocumentHtmlTransform"
-        name="plone.opendocument.opendocument_html_xslt.OpendocumentHtmlTransform"
+        factory=".opendocument_html_xslt.OpendocumentHtmlXsltTransform"
+        name="plone.opendocument.opendocument_html_xslt.OpendocumentHtmlXsltTransform"
         permission="zope.Public" /> 
 
 </configure>
