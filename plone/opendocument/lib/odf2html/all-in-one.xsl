@@ -1282,58 +1282,6 @@
 		</xsl:call-template>
 		<xsl:text>; </xsl:text>
 	</xsl:template>
-  <xsl:template name="added-length-values" mode="CSS-attr">
-        <!--adds 2 length values-->
-        <xsl:param name="length-1" select="'0pt'"/>
-        <xsl:param name="length-2" select="'0pt'"/>
-        
-		<xsl:variable name="magnitude-1">
-			<xsl:call-template name="length-magnitude">
-                <xsl:with-param name="length">
-                    <xsl:call-template name="length-normalize">
-                        <xsl:with-param name="length" select="$length-1"/>
-                     </xsl:call-template>
-                 </xsl:with-param>
-			</xsl:call-template>
-		</xsl:variable>    
- 		<xsl:variable name="magnitude-2">
-			<xsl:call-template name="length-magnitude">
-				<xsl:with-param name="length">
-                    <xsl:call-template name="length-normalize">
-                        <xsl:with-param name="length" select="$length-2"/>
-                     </xsl:call-template>
-                 </xsl:with-param>   
-			</xsl:call-template>
-        </xsl:variable>
-
-        <xsl:value-of select="concat($magnitude-1 + $magnitude-2, 'pt')"/>
-    </xsl:template>
-  <xsl:template name="subtracted-length-values" mode="CSS-attr">
-        <!--subtracts 2 length values and normalizes the result -->
-        <xsl:param name="length-1" select="'0pt'"/>
-        <xsl:param name="length-2" select="'0pt'"/>
-        
-        <xsl:variable name="magnitude-1">
-            <xsl:call-template name="length-magnitude">
-                <xsl:with-param name="length">
-                    <xsl:call-template name="length-normalize">
-                        <xsl:with-param name="length" select="$length-1"/>
-                     </xsl:call-template>
-                 </xsl:with-param>
-            </xsl:call-template>
-        </xsl:variable>    
-        <xsl:variable name="magnitude-2">
-            <xsl:call-template name="length-magnitude">
-                <xsl:with-param name="length">
-                    <xsl:call-template name="length-normalize">
-                        <xsl:with-param name="length" select="$length-2"/>
-                     </xsl:call-template>
-                 </xsl:with-param>   
-            </xsl:call-template>
-        </xsl:variable>
-    
-        <xsl:value-of select="concat($magnitude-1 - $magnitude-2, 'pt')"/>
-    </xsl:template>
   <xsl:template name="normalized-just-value" mode="CSS-attr">
 		<xsl:call-template name="length-normalize">
 			<xsl:with-param name="length" select="."/>
@@ -2126,9 +2074,9 @@
 				<xsl:when test=". mod 3 = 2">circle</xsl:when>
 				<xsl:when test=". mod 3 = 0">square</xsl:when>
 				<xsl:otherwise>disc</xsl:otherwise>
-            </xsl:choose>
+      </xsl:choose>
 		<xsl:text>; </xsl:text>
-    </xsl:template>
+  </xsl:template>
   <xsl:template match="text:list-level-style-number/@text:level" mode="CSS-attr">
 		<xsl:text>list-style-type: </xsl:text>
 			<xsl:choose>
@@ -2144,57 +2092,108 @@
   <xsl:template match="text:list-level-style-image/@text:level" mode="CSS-attr">
         <xsl:text>list-style-image: </xsl:text>
         <xsl:value-of select="concat('url(',$param_baseuri,./../@xlink:href,'); ')"/>
-    </xsl:template>
+  </xsl:template>
   <xsl:template name="computed-space-before" mode="CSS-attr">
-        <xsl:param name="associatedStyle" select="."/>
-        <xsl:param name="listLevelNode" select="."/>
-                
-        <!--Get @text:space-before of preceding list level
-            (!In fact we need @test:space-before + @fo:margin-left)-->
-        <xsl:variable name="spaceBefore" select="$listLevelNode/*/@text:space-before[starts-with(.,'-') = False]"/>
-        <xsl:variable name="level" select="$listLevelNode/@text:level"/>
-        <xsl:variable name="precedingSpaceBefore" select="$listLevelNode/../*[@text:level=$level - 1]/style:list-level-properties/@text:space-before"/>
-        <!--Compute current space-before length-->
-        <xsl:variable name="length">
-            <xsl:choose>
-                <xsl:when test="$precedingSpaceBefore">
-                    <xsl:call-template name="subtracted-length-values" mode="CSS-attr">
-                            <xsl:with-param name="length-1" select="$spaceBefore"/>
-                            <xsl:with-param name="length-2" select="$precedingSpaceBefore"/>
-                    </xsl:call-template>    
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:value-of select="$spaceBefore"/>
-                </xsl:otherwise>     
-            </xsl:choose>
-        </xsl:variable> 
-        <!--Get @fo:margin-left of associated style:style element-->
-        <xsl:variable name="associatedMarginLeft" select="$associatedStyle/*/@fo:margin-left"/> 
+      <xsl:param name="associatedStyle" select="."/>
+      <xsl:param name="listLevelNode" select="."/>
+              
+      <!--Get @text:space-before of preceding list level
+          (!In fact we need @test:space-before + @fo:margin-left)-->
+      <xsl:variable name="spaceBefore" select="$listLevelNode/*/@text:space-before[starts-with(.,'-') = False]"/>
+      <xsl:variable name="level" select="$listLevelNode/@text:level"/>
+      <xsl:variable name="precedingSpaceBefore" select="$listLevelNode/../*[@text:level=$level - 1]/style:list-level-properties/@text:space-before"/>
+      <!--Compute current space-before length-->
+      <xsl:variable name="length">
+          <xsl:choose>
+              <xsl:when test="$precedingSpaceBefore">
+                  <xsl:call-template name="subtracted-length-values" mode="CSS-attr">
+                          <xsl:with-param name="length-1" select="$spaceBefore"/>
+                          <xsl:with-param name="length-2" select="$precedingSpaceBefore"/>
+                  </xsl:call-template>    
+              </xsl:when>
+              <xsl:otherwise>
+                  <xsl:value-of select="$spaceBefore"/>
+              </xsl:otherwise>     
+          </xsl:choose>
+      </xsl:variable> 
+      <!--Get @fo:margin-left of associated style:style element-->
+      <xsl:variable name="associatedMarginLeft" select="$associatedStyle/*/@fo:margin-left"/> 
 
-        <!--Compute current space-before length again and emit-->
-        <xsl:text>margin-left:</xsl:text>
-        <xsl:choose>
-            <!--If there is an associated style:style element we add whoses fo:margin-left length-->
-            <xsl:when test="$associatedMarginLeft">
-                <xsl:variable name="length_">
-                    <xsl:call-template name="added-length-values" mode="CSS-attr">
-                        <xsl:with-param name="length-1" select="$length"/>
-                        <xsl:with-param name="length-2" select="$associatedMarginLeft"/>
-                    </xsl:call-template>
-                </xsl:variable>
-                <xsl:call-template name="normalized-value" mode="CSS-attr">
-                    <xsl:with-param name="length" select="$length_"/>
-                </xsl:call-template>
-            </xsl:when>
-            <!--Otherwise not-->
-            <xsl:otherwise>
-                <xsl:call-template name="normalized-value" mode="CSS-attr">
-                    <xsl:with-param name="length" select="$length"/>
-                </xsl:call-template>
-            </xsl:otherwise>
-        </xsl:choose>
+      <!--Compute current space-before length again and emit-->
+      <xsl:text>margin-left:</xsl:text>
+      <xsl:choose>
+          <!--If there is an associated style:style element we add whoses fo:margin-left length-->
+          <xsl:when test="$associatedMarginLeft">
+              <xsl:variable name="length_">
+                  <xsl:call-template name="added-length-values" mode="CSS-attr">
+                      <xsl:with-param name="length-1" select="$length"/>
+                      <xsl:with-param name="length-2" select="$associatedMarginLeft"/>
+                  </xsl:call-template>
+              </xsl:variable>
+              <xsl:call-template name="normalized-value" mode="CSS-attr">
+                  <xsl:with-param name="length" select="$length_"/>
+              </xsl:call-template>
+          </xsl:when>
+          <!--Otherwise not-->
+          <xsl:otherwise>
+              <xsl:call-template name="normalized-value" mode="CSS-attr">
+                  <xsl:with-param name="length" select="$length"/>
+              </xsl:call-template>
+          </xsl:otherwise>
+      </xsl:choose>
 
-	</xsl:template>
+  </xsl:template>
+  <xsl:template name="added-length-values" mode="CSS-attr">
+      <!--adds 2 length values-->
+      <xsl:param name="length-1" select="'0pt'"/>
+      <xsl:param name="length-2" select="'0pt'"/>
+       
+  <xsl:variable name="magnitude-1">
+    <xsl:call-template name="length-magnitude">
+              <xsl:with-param name="length">
+                  <xsl:call-template name="length-normalize">
+                      <xsl:with-param name="length" select="$length-1"/>
+                   </xsl:call-template>
+              </xsl:with-param>
+    </xsl:call-template>
+  </xsl:variable>    
+  <xsl:variable name="magnitude-2">
+    <xsl:call-template name="length-magnitude">
+      <xsl:with-param name="length">
+                  <xsl:call-template name="length-normalize">
+                      <xsl:with-param name="length" select="$length-2"/>
+                   </xsl:call-template>
+               </xsl:with-param>   
+    </xsl:call-template>
+      </xsl:variable>
+       <xsl:value-of select="concat($magnitude-1 + $magnitude-2, 'pt')"/>
+  </xsl:template>
+  <xsl:template name="subtracted-length-values" mode="CSS-attr">
+      <!--subtracts 2 length values and normalizes the result -->
+      <xsl:param name="length-1" select="'0pt'"/>
+      <xsl:param name="length-2" select="'0pt'"/>
+      
+      <xsl:variable name="magnitude-1">
+          <xsl:call-template name="length-magnitude">
+              <xsl:with-param name="length">
+                  <xsl:call-template name="length-normalize">
+                      <xsl:with-param name="length" select="$length-1"/>
+                   </xsl:call-template>
+               </xsl:with-param>
+          </xsl:call-template>
+      </xsl:variable>    
+      <xsl:variable name="magnitude-2">
+          <xsl:call-template name="length-magnitude">
+              <xsl:with-param name="length">
+                  <xsl:call-template name="length-normalize">
+                      <xsl:with-param name="length" select="$length-2"/>
+                   </xsl:call-template>
+               </xsl:with-param>   
+          </xsl:call-template>
+      </xsl:variable>
+ 
+      <xsl:value-of select="concat($magnitude-1 - $magnitude-2, 'pt')"/>
+  </xsl:template>
   <xsl:template match="text:list">                             
 		<xsl:variable name="level" select="count(ancestor::text:list)+1"/>
 		<!--

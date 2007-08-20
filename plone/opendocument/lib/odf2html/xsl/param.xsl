@@ -27,7 +27,7 @@
 	office:class="text"
 	office:version="1.0">
 
-	<xsl:param name="param_baseuri" />
+  <xsl:param name="param_baseuri" />
 
 	<xsl:param name="param_track_changes"/>
 
@@ -35,7 +35,7 @@
 
 	<xsl:param name="param_css_only"/>
 
-	<xsl:param name="scale">1</xsl:param>
+  <xsl:param name="scale">1</xsl:param> 
 
 	<xsl:param name="style.background-color">#A0A0A0</xsl:param>
 

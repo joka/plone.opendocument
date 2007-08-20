@@ -633,60 +633,6 @@
 		<xsl:text>; </xsl:text>
 	</xsl:template>
     
-    <xsl:template name="added-length-values" mode="CSS-attr">
-        <!--adds 2 length values-->
-        <xsl:param name="length-1" select="'0pt'"/>
-        <xsl:param name="length-2" select="'0pt'"/>
-        
-		<xsl:variable name="magnitude-1">
-			<xsl:call-template name="length-magnitude">
-                <xsl:with-param name="length">
-                    <xsl:call-template name="length-normalize">
-                        <xsl:with-param name="length" select="$length-1"/>
-                     </xsl:call-template>
-                 </xsl:with-param>
-			</xsl:call-template>
-		</xsl:variable>    
- 		<xsl:variable name="magnitude-2">
-			<xsl:call-template name="length-magnitude">
-				<xsl:with-param name="length">
-                    <xsl:call-template name="length-normalize">
-                        <xsl:with-param name="length" select="$length-2"/>
-                     </xsl:call-template>
-                 </xsl:with-param>   
-			</xsl:call-template>
-        </xsl:variable>
-
-        <xsl:value-of select="concat($magnitude-1 + $magnitude-2, 'pt')"/>
-    </xsl:template>  
-       
-    <xsl:template name="subtracted-length-values" mode="CSS-attr">
-        <!--subtracts 2 length values and normalizes the result -->
-        <xsl:param name="length-1" select="'0pt'"/>
-        <xsl:param name="length-2" select="'0pt'"/>
-        
-        <xsl:variable name="magnitude-1">
-            <xsl:call-template name="length-magnitude">
-                <xsl:with-param name="length">
-                    <xsl:call-template name="length-normalize">
-                        <xsl:with-param name="length" select="$length-1"/>
-                     </xsl:call-template>
-                 </xsl:with-param>
-            </xsl:call-template>
-        </xsl:variable>    
-        <xsl:variable name="magnitude-2">
-            <xsl:call-template name="length-magnitude">
-                <xsl:with-param name="length">
-                    <xsl:call-template name="length-normalize">
-                        <xsl:with-param name="length" select="$length-2"/>
-                     </xsl:call-template>
-                 </xsl:with-param>   
-            </xsl:call-template>
-        </xsl:variable>
-    
-        <xsl:value-of select="concat($magnitude-1 - $magnitude-2, 'pt')"/>
-    </xsl:template>
-
 	<xsl:template name="normalized-just-value" mode="CSS-attr">
 		<xsl:call-template name="length-normalize">
 			<xsl:with-param name="length" select="."/>
