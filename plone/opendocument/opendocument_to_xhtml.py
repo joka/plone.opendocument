@@ -11,7 +11,6 @@ from zope.interface import implements
 
 from plone.transforms.interfaces import ITransform
 from plone.transforms.message import PloneMessageFactory as _
-from plone.transforms.stringiter import StringIter
 from plone.transforms.transform import TransformResult  
 from plone.transforms.log import log
 import plone.opendocument.utils as utils
@@ -86,6 +85,7 @@ class OpendocumentToXHTML(object):
         
         #XSL tranformation
         try:
+            etree.clearErrorLog()
             parser = etree.XMLParser(remove_comments=True, remove_blank_text=True) 
             #concatenate all xml files
             contentXML = etree.parse(self._concatDataFiles(), parser)
@@ -110,12 +110,24 @@ class OpendocumentToXHTML(object):
             self._getMetaData(contentXML)
             #xslt transformation
             stylesheetXML = etree.parse(self.xsl_stylesheet, parser)
-            resultXML = contentXML.xslt(stylesheetXML)
+            xslt = etree.XSLT(stylesheetXML)
+            resultXML = xslt(contentXML)
             resultXML.write(self.data)
-            self.data.seek(0)        
+            self.data.seek(0)      
+            #log non fatal errors and warnings
+            if parser.error_log:
+                self.errors = self.errors + u'''
+                                 Parse errors which are not fatal:
+                                 %s
+                                 ''' % (parser.error_log)   
+            if xslt.error_log:                                 
+                self.errors = self.errors + u'''
+                                 XSLT errors which are not fatal:
+                                 %s
+                                 ''' % (xslt.error_log)   
+            
             for f in self._dataFiles.values():
                 f.close()
-             
             result = TransformResult(self.data, 
                                     subobjects=self.subobjects or {},
                                     metadata=self.metadata or {},
