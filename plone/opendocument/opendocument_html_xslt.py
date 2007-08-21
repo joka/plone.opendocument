@@ -55,7 +55,7 @@ class OpendocumentHtmlXsltTransform(object):
     
     xsl_stylesheet_param = {}
                                              
-    data = tempfile.NamedTemporaryFile()
+    data = None 
     subobjects = {}
     metadata = {}
     errors = u'' 
@@ -72,6 +72,7 @@ class OpendocumentHtmlXsltTransform(object):
                 'param_no_css':"0", #don't make css styles
                 'scale':"1", #scale font size, (non zero integer value)
                 }
+        self.data = tempfile.NamedTemporaryFile() 
           
     def transform(self, data):  
         '''
@@ -88,7 +89,6 @@ class OpendocumentHtmlXsltTransform(object):
             return none;
         
         result = None
-        
         #XSL tranformation
         try:
             etree.clearErrorLog()
@@ -105,7 +105,7 @@ class OpendocumentHtmlXsltTransform(object):
                 imageName = os.path.basename(imageName)
                 if not self._imageNames.has_key(imageName):
                     self.errors = self.errors + u'''
-                                 Image file '%s' does not exist. Maybe it is\
+                                 Image file or OLE Object '%s' does not exist. Maybe it is\
                                  not embedded in OpenDocument file?
                                  ''' % (imageName)   
                     i.set("{http://www.w3.org/1999/xlink}href", imageName) 
@@ -197,7 +197,6 @@ class OpendocumentHtmlXsltTransform(object):
                     self._imageNames[imageName] = imageName_ 
                     self.subobjects[imageName_] = imageContent
 
-            data.close()
             dataZip.close()        
 
         except Exception, e:

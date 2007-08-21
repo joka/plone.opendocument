@@ -1,0 +1,55 @@
+
+Tests for nocss_opendocument_html_xslt transform
+
+                          .o
+First we test that it fulfills the ITransform interface: 
+    
+   >>> from plone.transforms.interfaces import ITransform
+   >>> from plone.opendocument.nocss_opendocument_html_xslt import NocssOpendocumentHtmlXsltTransform
+   >>> from zope.interface.verify import verifyClass
+   >>> verifyClass(ITransform, NocssOpendocumentHtmlXsltTransform)
+   True     
+
+Then we register and create the transform:
+
+    >>> from zope.configuration.xmlconfig import XMLConfig
+    >>> import plone.opendocument
+    >>> from zope.component import queryUtility
+    >>> XMLConfig('configure.zcml', plone.opendocument)()
+    >>> util = queryUtility(ITransform,
+    ...    name='plone.opendocument.nocss_opendocument_html_xslt.NocssOpendocumentHtmlXsltTransform')
+    >>> util
+    <plone.opendocument.nocss_opendocument_html_xslt.NocssOpendocumentHtmlXsltTransform object at ...>
+
+A test file is not bad:
+
+    >>> import os
+    >>> dataPath = os.path.join(os.path.dirname(__file__), 'tests/input/test.odt')
+    >>> data = file(dataPath)
+    >>> type(data)
+    <type 'file'>
+
+Now we can do an nocss_opendocument_html_xslt transform:
+
+    >>> result = util.transform(data)
+
+To check the reslult we need some imports to handle files:
+
+    >>> import shutil 
+
+Now we can check result.data
+    
+    >>> outputDir = os.path.join(os.path.dirname(__file__), 'tests/output')
+    >>> outputFilePath = os.path.join(outputDir, 'nocss_test_odt.html')
+    >>> outputFile = file(outputFilePath, 'w+b')
+    >>> shutil.copyfileobj(result.data, outputFile)
+    >>> outputFile.close()
+    >>> result.data.close()
+    >>> testFilePath = os.path.join(outputDir, 'nocss_test_odtOLD.html')
+    >>> os.path.getsize(testFilePath) == os.path.getsize(outputFilePath)
+    True
+
+
+
+
+

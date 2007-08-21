@@ -19,11 +19,17 @@ def test_suite():
                                  optionflags=optionflags,
                                  tearDown=tearDown,
                                  setUp=configurationSetUp,    
-                                 ),
-            doctest.DocFileSuite('utils.text',
+                                ),
+             doctest.DocFileSuite('utils.text',
+                                  package='plone.opendocument', 
+                                  optionflags=optionflags,
+                                  ),
+            doctest.DocFileSuite('nocss_opendocument_html_xslt.text',
                                  package='plone.opendocument', 
                                  optionflags=optionflags,
-                                 )
+                                 tearDown=tearDown,
+                                 setUp=configurationSetUp,    
+                                 ),
             ])
    else:
         return unittest.TestSuite()

@@ -24,14 +24,15 @@ Then we register and create the transform:
 A test file is not bad:
 
     >>> import os
-    >>> dataPath = os.path.join(os.path.dirname(__file__), 'tests/input/test_odt.odt')
+    >>> dataPath = os.path.join(os.path.dirname(__file__), 'tests/input/test.odt')
     >>> data = file(dataPath)
     >>> type(data)
     <type 'file'>
 
 Now we can do an opendocument_html_xslt transform:
 
-    >>> result = OpendocumentHtmlXsltTransform().transform(data)
+    >>> result = util.transform(data)
+    >>> data.close()
 
 To check the reslult we need some imports to handle files:
 
@@ -40,7 +41,7 @@ To check the reslult we need some imports to handle files:
 
 Now we can check result.data
     
-    >>> outputDir = os.path.join(os.path.dirname(__file__), 'tests/output/test_odt')
+    >>> outputDir = os.path.join(os.path.dirname(__file__), 'tests/output')
     >>> outputFilePath = os.path.join(outputDir, 'test_odt.html')
     >>> outputFile = file(outputFilePath, 'w+b')
     >>> shutil.copyfileobj(result.data, outputFile)
@@ -52,26 +53,31 @@ Now we can check result.data
 
 and result.subobjects
 
-    >>> imageName = '10000000000000E2000000E2459CCEB9.gif'
+    >>> imageName = '100000000000005A00000014A13E146C.png'
     >>> imageContent = result.subobjects[imageName]
     >>> outputFilePath = os.path.join(outputDir, imageName)
     >>> outputFile = file(outputFilePath, 'w+b')
     >>> shutil.copyfileobj(imageContent, outputFile)
     >>> outputFile.close()
     >>> imageContent.close()
-    >>> pic1 = PIL.Image.open(os.path.join(outputDir, '10000000000000E2000000E2459CCEB9.gif'))
-    >>> pic1.format == 'GIF'
+    >>> pic1 = PIL.Image.open(os.path.join(outputDir,'100000000000005A00000014A13E146C.png'))
+    >>> pic1.format == 'PNG'
     True
 
 and result.metadata
     
     >>> result.metadata
-    {u'meta:generator': u'hand made', u'dc:language': u'de-DE', u'meta:image-count': u'1', u'meta:object-count': u'0', u'meta:Info 4': u'Info 4', u'meta:Info 1': u'Info 1', u'meta:initial-creator': u'Joscha Kr\xfctzki', u'meta:creation-date': u'2005-11-04T11:59:56', u'meta:editing-cycles': u'18', u'meta:editing-duration': u'PT1H45M25S', u'dc:date': u'2006-03-26T16:21:14', u'meta:Info 2': u'Info 2', u'meta:character-count': u'1193', u'meta:word-count': u'203', u'meta:page-count': u'2', u'meta:Info 3': u'Info 3', u'meta:paragraph-count': u'79', u'meta:table-count': u'3'}
+    {u'meta:generator': u'OpenOffice.org/2.2$Linux OpenOffice.org_project/680m18$Build-9161', u'dc:language': u'en-US', u'meta:image-count': u'1', u'meta:object-count': u'1', u'meta:word-count': u'210', u'meta:page-count': u'3', u'meta:editing-cycles': u'1', u'meta:editing-duration': u'PT0S', u'meta:character-count': u'1237', u'meta:paragraph-count': u'77', u'meta:table-count': u'4'}
+
+
 
 
 and result.errors
 
     >>> result.errors
+    u"\n                                 Image file or OLE Object 'Object 1' does not exist. Maybe it is                                 not embedded in OpenDocument file?\n                                 "
+
+
 
 
 

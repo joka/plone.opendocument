@@ -8,5 +8,11 @@
         factory=".opendocument_html_xslt.OpendocumentHtmlXsltTransform"
         name="plone.opendocument.opendocument_html_xslt.OpendocumentHtmlXsltTransform"
         permission="zope.Public" /> 
+    
+    <utility
+        provides="plone.transforms.interfaces.ITransform"
+        factory=".nocss_opendocument_html_xslt.NocssOpendocumentHtmlXsltTransform"
+        name="plone.opendocument.nocss_opendocument_html_xslt.NocssOpendocumentHtmlXsltTransform"
+        permission="zope.Public" /> 
 
 </configure>
