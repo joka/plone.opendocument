@@ -1,0 +1,364 @@
+<office:document xmlns:office="urn:oasis:names:tc:opendocument:xmlns:office:1.0" xmlns:meta="urn:oasis:names:tc:opendocument:xmlns:meta:1.0" xmlns:config="urn:oasis:names:tc:opendocument:xmlns:config:1.0" xmlns:text="urn:oasis:names:tc:opendocument:xmlns:text:1.0" xmlns:table="urn:oasis:names:tc:opendocument:xmlns:table:1.0" xmlns:draw="urn:oasis:names:tc:opendocument:xmlns:drawing:1.0" xmlns:presentation="urn:oasis:names:tc:opendocument:xmlns:presentation:1.0" xmlns:dr3d="urn:oasis:names:tc:opendocument:xmlns:dr3d:1.0" xmlns:chart="urn:oasis:names:tc:opendocument:xmlns:chart:1.0" xmlns:form="urn:oasis:names:tc:opendocument:xmlns:form:1.0" xmlns:script="urn:oasis:names:tc:opendocument:xmlns:script:1.0" xmlns:style="urn:oasis:names:tc:opendocument:xmlns:style:1.0" xmlns:number="urn:oasis:names:tc:opendocument:xmlns:datastyle:1.0" xmlns:anim="urn:oasis:names:tc:opendocument:xmlns:animation:1.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:math="http://www.w3.org/1998/Math/MathML" xmlns:xforms="http://www.w3.org/2002/xforms" xmlns:fo="urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0" xmlns:svg="urn:oasis:names:tc:opendocument:xmlns:svg-compatible:1.0" xmlns:smil="urn:oasis:names:tc:opendocument:xmlns:smil-compatible:1.0" xmlns:ooo="http://openoffice.org/2004/office" xmlns:ooow="http://openoffice.org/2004/writer" xmlns:oooc="http://openoffice.org/2004/calc"><!-- From meta.xml --><!-- From styles.xml --><!-- From content.xml --><office:document-content xmlns:koffice="http://www.koffice.org/2005/">
+ <office:automatic-styles>
+  <style:style style:name="ta1" style:family="table" style:master-page-name="Standard1">
+   <style:table-properties table:display="true"/>
+  </style:style>
+  <style:style style:name="co1" style:family="table-column">
+   <style:table-column-properties fo:break-before="auto" style:column-width="70pt"/>
+  </style:style>
+  <style:style style:name="co2" style:family="table-column">
+   <style:table-column-properties fo:break-before="auto" style:column-width="190pt"/>
+  </style:style>
+  <style:style style:name="co3" style:family="table-column">
+   <style:table-column-properties fo:break-before="auto" style:column-width="22pt"/>
+  </style:style>
+  <style:style style:name="co4" style:family="table-column">
+   <style:table-column-properties fo:break-before="auto" style:column-width="92pt"/>
+  </style:style>
+  <style:style style:name="co5" style:family="table-column">
+   <style:table-column-properties fo:break-before="auto" style:column-width="79pt"/>
+  </style:style>
+  <style:style style:name="co6" style:family="table-column">
+   <style:table-column-properties fo:break-before="auto" style:column-width="60pt"/>
+  </style:style>
+  <style:style style:name="ro1" style:family="table-row">
+   <style:table-row-properties fo:break-before="auto" style:row-height="30pt"/>
+  </style:style>
+  <style:style style:name="ro2" style:family="table-row">
+   <style:table-row-properties fo:break-before="auto" style:row-height="20pt"/>
+  </style:style>
+  <style:style style:name="ce1" style:family="table-cell">
+   <style:text-properties fo:color="#000000" fo:font-family="" fo:font-size="22pt"/>
+  </style:style>
+  <style:style style:name="ce2" style:family="table-cell">
+   <style:text-properties fo:font-family="" fo:font-size="12pt"/>
+  </style:style>
+  <style:style style:name="ce3" style:family="table-cell">
+   <style:table-cell-properties style:text-align-source="fix"/>
+   <style:paragraph-properties fo:text-align="end"/>
+  </style:style>
+  <style:style style:name="ce4" style:family="table-cell">
+   <style:table-cell-properties style:text-align-source="fix"/>
+   <style:paragraph-properties fo:text-align="end"/>
+   <style:text-properties fo:color="#b2b2b2" fo:font-family="" fo:font-size="28pt" fo:font-weight="bold"/>
+  </style:style>
+  <style:style style:name="ce5" style:family="table-cell">
+   <style:text-properties fo:color="#000000" fo:font-family="" fo:font-size="12pt"/>
+  </style:style>
+  <style:style style:name="ce6" style:family="table-cell">
+   <style:table-cell-properties fo:border-left="1pt solid #000000" fo:border-top="1pt solid #000000"/>
+   <style:text-properties fo:color="#000000" fo:font-family="" fo:font-size="12pt"/>
+  </style:style>
+  <style:style style:name="ce7" style:family="table-cell">
+   <style:table-cell-properties fo:border-right="1pt solid #000000" fo:border-top="1pt solid #000000"/>
+   <style:text-properties fo:color="#000000" fo:font-family="" fo:font-size="12pt"/>
+  </style:style>
+  <style:style style:name="ce8" style:family="table-cell">
+   <style:table-cell-properties fo:border-left="1pt solid #000000"/>
+   <style:text-properties fo:color="#000000" fo:font-family="" fo:font-size="12pt"/>
+  </style:style>
+  <style:style style:name="ce9" style:family="table-cell">
+   <style:table-cell-properties fo:border-right="1pt solid #000000"/>
+   <style:text-properties fo:color="#000000" fo:font-family="" fo:font-size="12pt"/>
+  </style:style>
+  <style:style style:name="ce10" style:family="table-cell">
+   <style:table-cell-properties style:text-align-source="fix" style:vertical-align="bottom"/>
+   <style:paragraph-properties fo:text-align="end"/>
+   <style:text-properties fo:color="#000000" fo:font-family="" fo:font-size="12pt"/>
+  </style:style>
+  <style:style style:name="ce11" style:family="table-cell">
+   <style:table-cell-properties fo:border-bottom="1pt solid #000000"/>
+   <style:text-properties fo:color="#000000" fo:font-family="" fo:font-size="12pt"/>
+  </style:style>
+  <style:style style:name="ce12" style:family="table-cell">
+   <style:table-cell-properties fo:border-bottom="1pt solid #000000" fo:border-top="1pt solid #000000"/>
+   <style:text-properties fo:color="#000000" fo:font-family="" fo:font-size="12pt"/>
+  </style:style>
+  <style:style style:name="ce13" style:family="table-cell">
+   <style:table-cell-properties fo:border-bottom="1pt solid #000000" fo:border-left="1pt solid #000000"/>
+   <style:text-properties fo:color="#000000" fo:font-family="" fo:font-size="12pt"/>
+  </style:style>
+  <style:style style:name="ce14" style:family="table-cell">
+   <style:table-cell-properties fo:border-bottom="1pt solid #000000" fo:border-right="1pt solid #000000"/>
+   <style:text-properties fo:color="#000000" fo:font-family="" fo:font-size="12pt"/>
+  </style:style>
+  <style:style style:name="ce15" style:family="table-cell">
+   <style:table-cell-properties fo:border-right="1pt solid #000000" fo:border-top="1pt solid #000000"/>
+   <style:text-properties fo:font-family="" fo:font-size="12pt"/>
+  </style:style>
+  <style:style style:name="ce16" style:family="table-cell">
+   <style:table-cell-properties fo:border-top="1pt solid #000000"/>
+   <style:text-properties fo:color="#000000" fo:font-family="" fo:font-size="12pt"/>
+  </style:style>
+  <style:style style:name="ce17" style:family="table-cell">
+   <style:table-cell-properties fo:border="1pt solid #000000" style:text-align-source="fix"/>
+   <style:paragraph-properties fo:text-align="center"/>
+   <style:text-properties fo:color="#000000" fo:font-family="" fo:font-size="12pt"/>
+  </style:style>
+  <style:style style:name="ce18" style:family="table-cell">
+   <style:table-cell-properties fo:border-bottom="1pt solid #000000" fo:border-left="1pt solid #000000" fo:border-top="1pt solid #000000"/>
+   <style:text-properties fo:color="#000000" fo:font-family="" fo:font-size="12pt"/>
+  </style:style>
+  <style:style style:name="ce19" style:family="table-cell">
+   <style:table-cell-properties fo:border-bottom="1pt solid #000000" fo:border-right="1pt solid #000000" fo:border-top="1pt solid #000000"/>
+   <style:text-properties fo:color="#000000" fo:font-family="" fo:font-size="12pt"/>
+  </style:style>
+  <style:style style:name="ce20" style:family="table-cell">
+   <style:table-cell-properties fo:border-left="1pt solid #000000" fo:border-right="1pt solid #000000"/>
+   <style:text-properties fo:color="#000000" fo:font-family="" fo:font-size="12pt"/>
+  </style:style>
+  <style:style style:name="ce21" style:family="table-cell">
+   <style:table-cell-properties fo:border-left="1pt solid #000000" fo:border-right="1pt solid #000000" fo:border-top="1pt solid #000000"/>
+   <style:text-properties fo:color="#000000" fo:font-family="" fo:font-size="12pt"/>
+  </style:style>
+  <style:style style:name="ce22" style:data-style-name="N1" style:family="table-cell">
+   <style:table-cell-properties fo:border-left="1pt solid #000000" fo:border-right="1pt solid #000000" fo:border-top="1pt solid #000000" style:vertical-align="middle"/>
+   <style:text-properties fo:color="#000000" fo:font-family="" fo:font-size="12pt"/>
+  </style:style>
+  <style:style style:name="ce23" style:family="table-cell">
+   <style:table-cell-properties fo:border-left="1pt solid #000000" fo:border-right="1pt solid #000000" style:vertical-align="middle"/>
+   <style:text-properties fo:color="#000000" fo:font-family="" fo:font-size="12pt"/>
+  </style:style>
+  <style:style style:name="ce24" style:data-style-name="N1" style:family="table-cell">
+   <style:table-cell-properties fo:border-left="1pt solid #000000" fo:border-right="1pt solid #000000" style:vertical-align="middle"/>
+   <style:text-properties fo:color="#000000" fo:font-family="" fo:font-size="12pt"/>
+  </style:style>
+  <style:style style:name="ce25" style:family="table-cell">
+   <style:table-cell-properties fo:border-bottom="1pt solid #000000" fo:border-left="1pt solid #000000" fo:border-right="1pt solid #000000"/>
+   <style:text-properties fo:color="#000000" fo:font-family="" fo:font-size="12pt"/>
+  </style:style>
+  <style:style style:name="ce26" style:family="table-cell">
+   <style:table-cell-properties fo:border-bottom="1pt solid #000000" fo:border-left="1pt solid #000000" fo:border-right="1pt solid #000000" style:vertical-align="middle"/>
+   <style:text-properties fo:color="#000000" fo:font-family="" fo:font-size="12pt"/>
+  </style:style>
+  <style:style style:name="ce27" style:family="table-cell">
+   <style:table-cell-properties fo:border="1pt solid #000000"/>
+   <style:text-properties fo:color="#000000" fo:font-family="" fo:font-size="12pt"/>
+  </style:style>
+  <style:style style:name="ce28" style:data-style-name="N1" style:family="table-cell">
+   <style:table-cell-properties fo:border="1pt solid #000000"/>
+   <style:text-properties fo:color="#000000" fo:font-family="" fo:font-size="12pt"/>
+  </style:style>
+  <style:style style:name="ce29" style:family="table-cell">
+   <style:text-properties fo:color="#000000" fo:font-family="" fo:font-size="11pt"/>
+  </style:style>
+  <style:style style:name="ce30" style:family="table-cell">
+   <style:text-properties fo:color="#000000" fo:font-family="" fo:font-size="12pt" fo:font-weight="bold"/>
+  </style:style>
+  <number:number-style style:name="N1">
+   <number:number number:decimal-places="2" number:min-integer-digits="1"/>
+  </number:number-style>
+ </office:automatic-styles>
+ <office:body>
+  <office:spreadsheet>
+   <table:table table:name="Sheet1" table:style-name="ta1">
+ <table:table-column table:style-name="co1"/>
+ <table:table-column table:style-name="co2"/>
+ <table:table-column table:style-name="co3"/>
+ <table:table-column table:style-name="co4"/>
+ <table:table-column table:style-name="co5"/>
+ <table:table-column table:style-name="co1"/>
+ <table:table-column table:style-name="co6" table:number-columns-repeated="6"/>
+ <table:table-column/>
+ <table:table-column table:style-name="co6" table:number-columns-repeated="2"/>
+ <table:table-row table:style-name="ro1">
+  <table:table-cell office:value-type="string" office:string-value="Company Name" table:style-name="ce1">
+   <text:p>Company Name</text:p>
+  </table:table-cell>
+  <table:table-cell table:style-name="ce2"/>
+  <table:table-cell table:style-name="ce3" table:number-columns-spanned="4"/>
+  <table:table-cell office:value-type="string" office:string-value="INVOICE" table:style-name="ce4" table:number-columns-spanned="3">
+   <text:p>INVOICE</text:p>
+  </table:table-cell>
+  <table:covered-table-cell table:style-name="ce2"/>
+  <table:covered-table-cell table:style-name="ce2"/>
+ </table:table-row>
+ <table:table-row table:style-name="ro2">
+  <table:table-cell office:value-type="string" office:string-value="Street Address" table:style-name="ce5">
+   <text:p>Street Address</text:p>
+  </table:table-cell>
+  <table:table-cell table:style-name="ce2"/>
+  <table:table-cell/>
+  <table:table-cell table:style-name="ce5" table:number-columns-repeated="2"/>
+ </table:table-row>
+ <table:table-row table:style-name="ro2">
+  <table:table-cell office:value-type="string" office:string-value="City, State, ZIP" table:style-name="ce5">
+   <text:p>City, State, ZIP</text:p>
+  </table:table-cell>
+  <table:table-cell table:style-name="ce2"/>
+ </table:table-row>
+ <table:table-row table:style-name="ro2">
+  <table:table-cell office:value-type="string" office:string-value="Phone/Fax Number" table:style-name="ce5">
+   <text:p>Phone/Fax Number</text:p>
+  </table:table-cell>
+  <table:table-cell table:style-name="ce2"/>
+ </table:table-row>
+ <table:table-row table:style-name="ro2">
+  <table:table-cell/>
+ </table:table-row>
+ <table:table-row table:style-name="ro2">
+  <table:table-cell office:value-type="string" office:string-value="SOLD TO" table:style-name="ce6">
+   <text:p>SOLD TO</text:p>
+  </table:table-cell>
+  <table:table-cell table:style-name="ce7"/>
+ </table:table-row>
+ <table:table-row table:style-name="ro2">
+  <table:table-cell table:style-name="ce8"/>
+  <table:table-cell table:style-name="ce9"/>
+  <table:table-cell/>
+  <table:table-cell office:value-type="string" office:string-value="Invoice Number" table:style-name="ce10" table:number-columns-spanned="2">
+   <text:p>Invoice Number</text:p>
+  </table:table-cell>
+  <table:covered-table-cell table:style-name="ce5"/>
+  <table:table-cell table:style-name="ce11"/>
+ </table:table-row>
+ <table:table-row table:style-name="ro2">
+  <table:table-cell table:style-name="ce8"/>
+  <table:table-cell table:style-name="ce9"/>
+  <table:table-cell/>
+  <table:table-cell office:value-type="string" office:string-value="Invoice Date" table:style-name="ce10" table:number-columns-spanned="2">
+   <text:p>Invoice Date</text:p>
+  </table:table-cell>
+  <table:covered-table-cell table:style-name="ce5"/>
+  <table:table-cell table:style-name="ce12"/>
+ </table:table-row>
+ <table:table-row table:style-name="ro2">
+  <table:table-cell table:style-name="ce13"/>
+  <table:table-cell table:style-name="ce14"/>
+  <table:table-cell/>
+  <table:table-cell office:value-type="string" office:string-value="Our Order Number" table:style-name="ce10" table:number-columns-spanned="2">
+   <text:p>Our Order Number</text:p>
+  </table:table-cell>
+  <table:covered-table-cell table:style-name="ce5"/>
+  <table:table-cell table:style-name="ce12"/>
+ </table:table-row>
+ <table:table-row table:style-name="ro2">
+  <table:table-cell table:number-columns-repeated="3"/>
+  <table:table-cell office:value-type="string" office:string-value="Your Order Number" table:style-name="ce10" table:number-columns-spanned="2">
+   <text:p>Your Order Number</text:p>
+  </table:table-cell>
+  <table:covered-table-cell table:style-name="ce5"/>
+  <table:table-cell table:style-name="ce12"/>
+ </table:table-row>
+ <table:table-row table:style-name="ro2">
+  <table:table-cell office:value-type="string" office:string-value="SHIPPED TO" table:style-name="ce6">
+   <text:p>SHIPPED TO</text:p>
+  </table:table-cell>
+  <table:table-cell table:style-name="ce15"/>
+  <table:table-cell/>
+  <table:table-cell office:value-type="string" office:string-value="Terms" table:style-name="ce10" table:number-columns-spanned="2">
+   <text:p>Terms</text:p>
+  </table:table-cell>
+  <table:covered-table-cell table:style-name="ce5"/>
+  <table:table-cell table:style-name="ce12"/>
+ </table:table-row>
+ <table:table-row table:style-name="ro2">
+  <table:table-cell table:style-name="ce8"/>
+  <table:table-cell table:style-name="ce9"/>
+  <table:table-cell/>
+  <table:table-cell office:value-type="string" office:string-value="Sales Rep" table:style-name="ce10" table:number-columns-spanned="2">
+   <text:p>Sales Rep</text:p>
+  </table:table-cell>
+  <table:covered-table-cell table:style-name="ce5"/>
+  <table:table-cell table:style-name="ce12"/>
+ </table:table-row>
+ <table:table-row table:style-name="ro2">
+  <table:table-cell table:style-name="ce8"/>
+  <table:table-cell table:style-name="ce9"/>
+  <table:table-cell/>
+  <table:table-cell office:value-type="string" office:string-value="Shipped Via" table:style-name="ce10" table:number-columns-spanned="2">
+   <text:p>Shipped Via</text:p>
+  </table:table-cell>
+  <table:covered-table-cell table:style-name="ce5"/>
+  <table:table-cell table:style-name="ce12"/>
+ </table:table-row>
+ <table:table-row table:style-name="ro2">
+  <table:table-cell table:style-name="ce13"/>
+  <table:table-cell table:style-name="ce14"/>
+  <table:table-cell/>
+  <table:table-cell table:style-name="ce10" table:number-columns-spanned="2"/>
+  <table:covered-table-cell table:style-name="ce5"/>
+  <table:table-cell table:style-name="ce16"/>
+ </table:table-row>
+ <table:table-row table:style-name="ro2">
+  <table:table-cell/>
+ </table:table-row>
+ <table:table-row table:style-name="ro2">
+  <table:table-cell office:value-type="string" office:string-value="Quantity" table:style-name="ce17">
+   <text:p>Quantity</text:p>
+  </table:table-cell>
+  <table:table-cell office:value-type="string" office:string-value="Description" table:style-name="ce18" table:number-columns-spanned="3">
+   <text:p>Description</text:p>
+  </table:table-cell>
+  <table:covered-table-cell table:style-name="ce12"/>
+  <table:covered-table-cell table:style-name="ce19"/>
+  <table:table-cell office:value-type="string" office:string-value="Unit Price" table:style-name="ce17">
+   <text:p>Unit Price</text:p>
+  </table:table-cell>
+  <table:table-cell office:value-type="string" office:string-value="Amount" table:style-name="ce17">
+   <text:p>Amount</text:p>
+  </table:table-cell>
+ </table:table-row>
+ <table:table-row table:style-name="ro2">
+  <table:table-cell table:style-name="ce20"/>
+  <table:table-cell table:number-columns-repeated="3"/>
+  <table:table-cell table:style-name="ce21"/>
+  <table:table-cell table:style-name="ce22"/>
+ </table:table-row>
+ <table:table-row table:style-name="ro2" table:number-rows-repeated="5">
+  <table:table-cell table:style-name="ce20"/>
+  <table:table-cell table:number-columns-repeated="3"/>
+  <table:table-cell table:style-name="ce20"/>
+  <table:table-cell table:style-name="ce23"/>
+ </table:table-row>
+ <table:table-row table:style-name="ro2">
+  <table:table-cell table:style-name="ce20"/>
+  <table:table-cell table:number-columns-repeated="3"/>
+  <table:table-cell table:style-name="ce20"/>
+  <table:table-cell table:style-name="ce24"/>
+ </table:table-row>
+ <table:table-row table:style-name="ro2" table:number-rows-repeated="7">
+  <table:table-cell table:style-name="ce20"/>
+  <table:table-cell table:number-columns-repeated="3"/>
+  <table:table-cell table:style-name="ce20"/>
+  <table:table-cell table:style-name="ce23"/>
+ </table:table-row>
+ <table:table-row table:style-name="ro2">
+  <table:table-cell table:style-name="ce25"/>
+  <table:table-cell table:style-name="ce13"/>
+  <table:table-cell table:style-name="ce11"/>
+  <table:table-cell table:style-name="ce14"/>
+  <table:table-cell table:style-name="ce25"/>
+  <table:table-cell table:style-name="ce26"/>
+ </table:table-row>
+ <table:table-row table:style-name="ro2">
+  <table:table-cell table:number-columns-repeated="4"/>
+  <table:table-cell office:value-type="string" office:string-value="TOTAL" table:style-name="ce27">
+   <text:p>TOTAL</text:p>
+  </table:table-cell>
+  <table:table-cell office:value-type="float" office:value="0" table:style-name="ce28" table:formula="=sum([.F17]:[.F31])">
+   <text:p>0.00</text:p>
+  </table:table-cell>
+ </table:table-row>
+ <table:table-row table:style-name="ro2">
+  <table:table-cell/>
+ </table:table-row>
+ <table:table-row table:style-name="ro2">
+  <table:table-cell office:value-type="string" office:string-value="If you have any questions concerning this invoice, please contact:" table:style-name="ce29">
+   <text:p>If you have any questions concerning this invoice, please contact:</text:p>
+  </table:table-cell>
+  <table:table-cell table:style-name="ce2" table:number-columns-repeated="4"/>
+ </table:table-row>
+ <table:table-row table:style-name="ro2">
+  <table:table-cell office:value-type="string" office:string-value="Thank you for your business !" table:style-name="ce30">
+   <text:p>Thank you for your business !</text:p>
+  </table:table-cell>
+  <table:table-cell table:style-name="ce2"/>
+ </table:table-row>
+ <table:table-row table:style-name="ro2" table:number-rows-repeated="10">
+  <table:table-cell/>
+ </table:table-row>
+</table:table>
+  </office:spreadsheet>
+ </office:body>
+</office:document-content></office:document>

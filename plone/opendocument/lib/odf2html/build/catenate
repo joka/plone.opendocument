@@ -1,0 +1,8 @@
+#!/bin/bash
+
+unzip $1 -d tmp/ 1>/dev/null
+cp catenate.xsl tmp/
+cd tmp;
+xsltproc catenate.xsl content.xml
+cd ..;
+rm -rf tmp/

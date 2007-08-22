@@ -1976,6 +1976,7 @@
   <xsl:key name="listTypes" match="text:list-style" use="@style:name"/>
   <xsl:key name="stylesAssociated" match="style:style[*/@fo:margin-left]" use="@style:list-style-name"/>
   <xsl:template match="text:list-style">
+    <xsl:value-of select="$param_css_only"/> <xsl:text>ggggg</xsl:text>
 		
 		<xsl:if test="$CSS.debug=1">
 			<xsl:text>/* text:list-style '</xsl:text>
@@ -2240,7 +2241,7 @@
 	</xsl:template>
   <xsl:template match="text:list-item">
         <xsl:choose>
-            <xsl:when test="./*[text:p] | ./*[text:h] ">
+          <xsl:when test="./text:list[count(../child::*) = 1]">
                 <li class="listLevelWrapper">
                     <xsl:apply-templates/>
                 </li>
