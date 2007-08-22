@@ -37,10 +37,10 @@
 
   <xsl:param name="scale">1</xsl:param> 
 
-	<xsl:param name="style.background-color">#A0A0A0</xsl:param>
+	<xsl:param name="style.background-color">#FFFFFF</xsl:param>
 
 	<xsl:param name="presentation.page.display">1</xsl:param>
-	<xsl:param name="presentation.notes.display">0</xsl:param>
+	<xsl:param name="presentation.notes.display">1</xsl:param>
 
 	<xsl:param name="CSS.debug">0</xsl:param>
 
