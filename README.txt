@@ -8,7 +8,7 @@ XSL transformations for OpenDocument files.
 
 It requires:
     plone.transforms (https://svn.plone.org/svn/plone/plone.transforms)
-    lxml (You can use the lxml  )
+    lxml (You can use the plone.recipe.lxml egg)
     PIL
 
 The OpendocumentToXHTML transformation is based on the odf2html style sheet
