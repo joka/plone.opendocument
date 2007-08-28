@@ -154,10 +154,9 @@ class OpendocumentHtmlXsltTransform(object):
         Extracts required files from data (opendocument file). They are stored
         in self.subobjects and self._dataFiles.
         ''' 
-        dataZip = zipfile.ZipFile(data)
-        dataIterator = utils.zipIterator(dataZip)
-
         try:
+            dataZip = zipfile.ZipFile(data)
+            dataIterator = utils.zipIterator(dataZip)
             for fileName, fileContent in dataIterator:
                 #getting data files
                 if (fileName == 'content.xml'):
