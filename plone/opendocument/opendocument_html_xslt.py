@@ -87,7 +87,6 @@ class OpendocumentHtmlXsltTransform(object):
         self._prepareTrans(data)
         if not self._dataFiles: 
             return None;
-        
         result = None
         #XSL tranformation
         try:

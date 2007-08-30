@@ -1,3 +1,9 @@
+30.August 2007
+-------------
+* layout.xsl: added style:default-page-layout template stub to generate valid
+  CSS.
+  test file tests/commonUseCases/letter.odt
+
 03.August 2007
 -------------
 * list.xsl: added text:list-level-style-image template

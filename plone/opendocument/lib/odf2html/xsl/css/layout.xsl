@@ -89,9 +89,15 @@
 	
 	
 	<xsl:template match="style:page-layout"/>
+
+  
+  <xsl:template match="style:handout-master"/>
+  
+  
+  <xsl:template match="style:default-page-layout" />
 	
 	
-	<xsl:template match="style:handout-master"/>
+  <xsl:template match="style:default-page-layout" mode="CSS-attr" />
 	
 	
 	<xsl:template match="style:page-layout" mode="CSS-attr" >
@@ -101,8 +107,7 @@
 		<xsl:apply-templates />
 		/* style:page-layout end */
 	</xsl:template>
-	
-	
+  
 	<xsl:template match="@fo:page-width" mode="CSS-attr">
 		<xsl:text>width: </xsl:text>
 		<xsl:variable name="width">
