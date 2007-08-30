@@ -72,7 +72,7 @@ class OpendocumentHtmlXsltTransform(object):
                 'param_no_css':"0", #don't make css styles
                 'scale':"1", #scale font size, (non zero integer value)
                 }
-        self.data = tempfile.NamedTemporaryFile() 
+        self.data = tempfile.NamedTemporaryFile()
           
     def transform(self, data):  
         '''
@@ -91,61 +91,71 @@ class OpendocumentHtmlXsltTransform(object):
         result = None
         #XSL tranformation
         try:
-            etree.clearErrorLog()
-            parser = etree.XMLParser(remove_comments=True, remove_blank_text=True) 
-            #concatenate all xml files
-            contentXML = etree.parse(self._concatDataFiles(), parser)
-            contentXML.xinclude()
-            #adjust file paths
-            root = contentXML.getroot()
-            images = root.xpath("//draw:image", {'draw' :\
-                'urn:oasis:names:tc:opendocument:xmlns:drawing:1.0' })
-            for i in images:
-                imageName = i.get("{http://www.w3.org/1999/xlink}href")
-                imageName = os.path.basename(imageName)
-                if not self._imageNames.has_key(imageName):
-                    self.errors = self.errors + u'''
-                                 Image file or OLE Object '%s' does not exist. Maybe it is\
-                                 not embedded in OpenDocument file?
-                                 ''' % (imageName)   
+            try:
+                etree.clearErrorLog()
+                parser = etree.XMLParser(remove_comments=True,\
+                        remove_blank_text=True) 
+                #concatenate all xml files
+                contentXML = etree.parse(self._concatDataFiles(), parser)
+                contentXML.xinclude()
+                #adjust file paths
+                root = contentXML.getroot()
+                images = root.xpath("//draw:image", {'draw' :\
+                    'urn:oasis:names:tc:opendocument:xmlns:drawing:1.0' })
+                for i in images:
+                    imageName = i.get("{http://www.w3.org/1999/xlink}href")
+                    imageName = os.path.basename(imageName)
+                    if not self._imageNames.has_key(imageName):
+                        self.errors = self.errors + u'''
+                                     Image file or OLE Object '%s' does not\
+                                     exist. Maybe it is\
+                                     not embedded in OpenDocument file?
+                                     ''' % (imageName)   
+                        i.set("{http://www.w3.org/1999/xlink}href", imageName) 
+                        continue
+                    imageName = self._imageNames[imageName]
                     i.set("{http://www.w3.org/1999/xlink}href", imageName) 
-                    continue
-                imageName = self._imageNames[imageName]
-                i.set("{http://www.w3.org/1999/xlink}href", imageName) 
-            #extract meta data
-            self._getMetaData(contentXML)
-            #xslt transformation
-            stylesheetXML = etree.parse(self.xsl_stylesheet, parser)
-            xslt = etree.XSLT(stylesheetXML)
-            resultXML = xslt(contentXML, **self.xsl_stylesheet_param) 
-            resultXML.write(self.data)
-            self.data.seek(0)      
-            #log non fatal errors and warnings
-            if parser.error_log:
-                self.errors = self.errors + u'''
-                                 Parse errors which are not fatal:
-                                 %s
-                                 ''' % (parser.error_log)   
-            if xslt.error_log:                                 
-                self.errors = self.errors + u'''
-                                 XSLT errors which are not fatal:
-                                 %s
-                                 ''' % (xslt.error_log)   
-            
-            for f in self._dataFiles.values():
-                f.close()
-            result = TransformResult(self.data, 
-                                    subobjects=self.subobjects or {},
-                                    metadata=self.metadata or {},
-                                    errors=self.errors or None
-                                    ) 
-        except etree.LxmlError, e:
-            log(DEBUG,\
-                str(e) + ('\nlibxml error_log:\n') + str(e.error_log))
-            return None
-        except Exception, e:
-            log(DEBUG, str(e))
-            return None
+                #extract meta data
+                self._getMetaData(contentXML)
+                #xslt transformation
+                stylesheetXML = etree.parse(self.xsl_stylesheet, parser)
+                xslt = etree.XSLT(stylesheetXML)
+                resultXML = xslt(contentXML, **self.xsl_stylesheet_param) 
+                resultXML.write(self.data)
+                self.data.seek(0)      
+                #log non fatal errors and warnings
+                if parser.error_log:
+                    self.errors = self.errors + u'''
+                                     Parse errors which are not fatal:
+                                     %s
+                                     ''' % (parser.error_log)   
+                if xslt.error_log:                                 
+                    self.errors = self.errors + u'''
+                                     XSLT errors which are not fatal:
+                                     %s
+                                     ''' % (xslt.error_log)   
+                
+                for f in self._dataFiles.values():
+                    f.close()
+                result = TransformResult(self.data, 
+                                        subobjects=self.subobjects or {},
+                                        metadata=self.metadata or {},
+                                        errors=self.errors or None
+                                        ) 
+            except etree.LxmlError, e:
+                log(DEBUG,\
+                    str(e) + ('\nlibxml error_log:\n') + str(e.error_log))
+                return None
+            except Exception, e:
+                log(DEBUG, str(e))
+                return None
+        finally:
+            self.data = tempfile.NamedTemporaryFile()
+            self.subobjects = {}
+            self.metadata = {}
+            self.errors = u'' 
+            self._dataFiles = {} 
+            self._imageNames = {}  
 
         return result 
 
@@ -155,8 +165,15 @@ class OpendocumentHtmlXsltTransform(object):
         in self.subobjects and self._dataFiles.
         ''' 
         try:
-            dataZip = zipfile.ZipFile(data)
+            #transform data to zip file object
+            data_ = tempfile.NamedTemporaryFile()
+            for chunk in data:
+                    data_.write(chunk)
+            data_.seek(0) 
+            dataZip = zipfile.ZipFile(data_)
             dataIterator = utils.zipIterator(dataZip)
+
+            #extract content
             for fileName, fileContent in dataIterator:
                 #getting data files
                 if (fileName == 'content.xml'):
