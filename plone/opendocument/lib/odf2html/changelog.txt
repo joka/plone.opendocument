@@ -3,6 +3,12 @@
 * layout.xsl: added style:default-page-layout template stub to generate valid
   CSS.
   test file tests/commonUseCases/letter.odt
+* css.xsl: commented out html,body,.page styles for plone support
+* default.xsl: commented out style_standard_default template css styles for plone
+  support
+* css.xsl: document-styles templated, added type attribute
+* attribute.xsl: commented out @style:writing-mode, propritary microsoft 
+* odf.xsl: added title element to generate valid HTML
 
 03.August 2007
 -------------

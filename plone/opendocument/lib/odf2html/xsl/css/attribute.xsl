@@ -553,31 +553,32 @@
 	
 	<!-- Text direction -->
 	<xsl:template match="@style:writing-mode" mode="CSS-attr">
-		<xsl:choose>
-			<xsl:when test=". = 'lr-tb' or . = 'lr'">
-				<xsl:text>direction: ltr; </xsl:text>
-				<xsl:text>writing-mode: lr-tb; </xsl:text>
-			</xsl:when>
-			<xsl:when test=". = 'rl-tb' or . = 'rl'">
-				<xsl:text>direction: rtl; </xsl:text>
-				<xsl:text>writing-mode: rl-tb; </xsl:text>
-			</xsl:when>
-			<xsl:when test=". = 'tb-rl' or . = 'tb'">
-				<xsl:text>direction: rtl; </xsl:text>
-				<xsl:text>writing-mode: tb-rl; </xsl:text>
-			</xsl:when>
-			<xsl:when test=". = 'tb-lr'">
-				<xsl:text>direction: ltr; </xsl:text>
-				<xsl:text>writing-mode: tb-lr; </xsl:text>
-			</xsl:when>
-			<xsl:when test=". = 'page'">
-				<xsl:text>direction: inherit; </xsl:text>
-				<xsl:text>writing-mode: inherit; </xsl:text>
-			</xsl:when>
-			<xsl:otherwise>
-				<xsl:call-template name="copy-attr" />
-			</xsl:otherwise>
-		</xsl:choose>
+  <!--propritary microsoft -->
+		<!--<xsl:choose>-->
+			<!--<xsl:when test=". = 'lr-tb' or . = 'lr'">-->
+				<!--<xsl:text>direction: ltr; </xsl:text>-->
+				<!--<xsl:text>writing-mode: lr-tb; </xsl:text>-->
+			<!--</xsl:when>-->
+			<!--<xsl:when test=". = 'rl-tb' or . = 'rl'">-->
+				<!--<xsl:text>direction: rtl; </xsl:text>-->
+				<!--<xsl:text>writing-mode: rl-tb; </xsl:text>-->
+			<!--</xsl:when>-->
+			<!--<xsl:when test=". = 'tb-rl' or . = 'tb'">-->
+				<!--<xsl:text>direction: rtl; </xsl:text>-->
+				<!--<xsl:text>writing-mode: tb-rl; </xsl:text>-->
+			<!--</xsl:when>-->
+			<!--<xsl:when test=". = 'tb-lr'">-->
+				<!--<xsl:text>direction: ltr; </xsl:text>-->
+				<!--<xsl:text>writing-mode: tb-lr; </xsl:text>-->
+			<!--</xsl:when>-->
+			<!--<xsl:when test=". = 'page'">-->
+				<!--<xsl:text>direction: inherit; </xsl:text>-->
+				<!--<xsl:text>writing-mode: inherit; </xsl:text>-->
+			<!--</xsl:when>-->
+			<!--<xsl:otherwise>-->
+				<!--<xsl:call-template name="copy-attr" />-->
+			<!--</xsl:otherwise>-->
+		<!--</xsl:choose>-->
 	</xsl:template>
 
 	<xsl:template match="@style:direction" mode="CSS-attr">

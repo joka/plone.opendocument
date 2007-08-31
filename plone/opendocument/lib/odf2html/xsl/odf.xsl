@@ -41,7 +41,8 @@
 	<xsl:template match="/office:document">
 		<xsl:if test="not($param_css_only)">
 		<html xmlns="http://www.w3.org/1999/xhtml">
-			<head>
+      <head>
+        <title />
 				<!-- meta must be first -->
 				<xsl:apply-templates select="office:document-meta"/>
 				<!-- must be second -->

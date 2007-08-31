@@ -1,7 +1,7 @@
 # coding: utf-8 
 from zope.interface import implements
 
-from plone.transforms.interfaces import ITransform
+from plone.transforms.interfaces import ITransform, IRankedTransform
 from plone.transforms.message import PloneMessageFactory as _
 from plone.opendocument.opendocument_html_xslt import \
         OpendocumentHtmlXsltTransform
@@ -19,7 +19,7 @@ class NocssOpendocumentHtmlXsltTransform(OpendocumentHtmlXsltTransform):
     XSL transform which transforms OpenDocument files into XHTML but skips
     css styles.
     """
-    implements(ITransform)
+    implements(ITransform, IRankedTransform)
     
     name = u'plone.opendocument.opendocument_html_xslt.NocssOpendocumentHtmlXsltTransform'
 
@@ -29,6 +29,8 @@ class NocssOpendocumentHtmlXsltTransform(OpendocumentHtmlXsltTransform):
     description = _(u'description_markdown_transform',
         default=u"A transform which transforms OpenDocument files into XHTML \
         with XSL but skips css styles")
+
+    rank = 2
 
     def __init__(self):
         super(NocssOpendocumentHtmlXsltTransform, self).__init__()

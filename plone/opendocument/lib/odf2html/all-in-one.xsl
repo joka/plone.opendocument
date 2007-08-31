@@ -159,7 +159,8 @@
   <xsl:template match="/office:document">
 		<xsl:if test="not($param_css_only)">
 		<html>
-			<head>
+      <head>
+        <title/>
 				<!-- meta must be first -->
 				<xsl:apply-templates select="office:document-meta"/>
 				<!-- must be second -->
@@ -190,14 +191,15 @@
   <xsl:template match="office:document-content/office:automatic-styles"/>
   <xsl:template name="document-styles">
 		<xsl:if test="not($param_no_css)">
-		<style>
+		<style type="text/css">
 			<xsl:call-template name="document-styles-css"/>
 		</style>
 		</xsl:if>
 	</xsl:template>
   <xsl:template name="document-styles-css">
 		/* office:document-styles begin */
-		html
+    /*better plone support */
+		/*html
 		{
 			font-family: Verdana, SunSans-Regular, Sans-Serif;
 			font-size: <xsl:value-of select="$scale * 14"/>pt;
@@ -220,7 +222,7 @@
 			{
 				position: absolute;
 			}
-		}
+		} */
 
         ul 
         {
@@ -242,8 +244,8 @@
 
         table
         {
-            /* Testfile letter.odt looks better without borders */
-		    #border: thin solid gray;  
+             /*Testfile letter.odt looks better without borders*/
+		  /* border: thin solid gray;  */
 			border-collapse: collapse;
 			empty-cells: show;
 			font-size: 10pt;
@@ -251,7 +253,7 @@
 		}
 		td
 		{
-			#border: thin solid gray;
+			/*order: thin solid gray;*/
 			vertical-align: bottom;
 		}
 		.cell_string
@@ -277,17 +279,22 @@
 		.page_table td {border: 0; padding-right:3em; vertical-align:top;}
 		
 		.page
-		{
+    { 
+     /*  better plone support */
+     /*
 			background-color: white;
 			border-left: 1px solid black;
 			border-right: 2px solid black;
-			border-top: 1px solid black;
-			border-bottom: 2px solid black;
+			border-top: 1px solid black; */
+			border-bottom: 1px solid black;
+			font-family: Verdana, SunSans-Regular, Sans-Serif;
+			font-size: <xsl:value-of select="$scale * 14"/>pt;
 		}
 		
 		<xsl:if test="//office:spreadsheet">
 			<xsl:text>
-        /* testfile invoice.ods looks better without */      
+       /* testfile invoice.ods looks better without*/
+      /*
         td p
 		{
 			max-height: 2.5ex;
@@ -296,8 +303,7 @@
 		td p:hover
 		{
 			max-height: none;
-        }
-        */
+        }  */
     	    </xsl:text>
 		</xsl:if>
 
@@ -557,10 +563,10 @@
 		
 		<xsl:choose>
 			<xsl:when test="name()='style:page-layout'">
-				
-				<xsl:text>border-left: 1px solid gray;</xsl:text>
-				<xsl:text>border-right: 1px solid gray;</xsl:text>
-				<xsl:text>border-top: 1px solid gray;</xsl:text>
+				<!--better plone support-->
+				<!--<xsl:text>border-left: 1px solid gray;</xsl:text>-->
+				<!--<xsl:text>border-right: 1px solid gray;</xsl:text>-->
+				<!--<xsl:text>border-top: 1px solid gray;</xsl:text>-->
 				<xsl:text>border-bottom: 1px solid gray;</xsl:text>
 				
 				<xsl:if test="//office:text|//office:spreadsheet">
@@ -722,6 +728,8 @@
   <xsl:template match="style:header"/>
   <xsl:template match="style:page-layout"/>
   <xsl:template match="style:handout-master"/>
+  <xsl:template match="style:default-page-layout"/>
+  <xsl:template match="style:default-page-layout" mode="CSS-attr"/>
   <xsl:template match="style:page-layout" mode="CSS-attr">
 		/* style:page-layout begin */
 		<xsl:call-template name="style_standard_default" mode="CSS-attr"/>
@@ -1213,31 +1221,32 @@
 		</xsl:choose>
 	</xsl:template>
   <xsl:template match="@style:writing-mode" mode="CSS-attr">
-		<xsl:choose>
-			<xsl:when test=". = 'lr-tb' or . = 'lr'">
-				<xsl:text>direction: ltr; </xsl:text>
-				<xsl:text>writing-mode: lr-tb; </xsl:text>
-			</xsl:when>
-			<xsl:when test=". = 'rl-tb' or . = 'rl'">
-				<xsl:text>direction: rtl; </xsl:text>
-				<xsl:text>writing-mode: rl-tb; </xsl:text>
-			</xsl:when>
-			<xsl:when test=". = 'tb-rl' or . = 'tb'">
-				<xsl:text>direction: rtl; </xsl:text>
-				<xsl:text>writing-mode: tb-rl; </xsl:text>
-			</xsl:when>
-			<xsl:when test=". = 'tb-lr'">
-				<xsl:text>direction: ltr; </xsl:text>
-				<xsl:text>writing-mode: tb-lr; </xsl:text>
-			</xsl:when>
-			<xsl:when test=". = 'page'">
-				<xsl:text>direction: inherit; </xsl:text>
-				<xsl:text>writing-mode: inherit; </xsl:text>
-			</xsl:when>
-			<xsl:otherwise>
-				<xsl:call-template name="copy-attr"/>
-			</xsl:otherwise>
-		</xsl:choose>
+  <!--propritary microsoft -->
+		<!--<xsl:choose>-->
+			<!--<xsl:when test=". = 'lr-tb' or . = 'lr'">-->
+				<!--<xsl:text>direction: ltr; </xsl:text>-->
+				<!--<xsl:text>writing-mode: lr-tb; </xsl:text>-->
+			<!--</xsl:when>-->
+			<!--<xsl:when test=". = 'rl-tb' or . = 'rl'">-->
+				<!--<xsl:text>direction: rtl; </xsl:text>-->
+				<!--<xsl:text>writing-mode: rl-tb; </xsl:text>-->
+			<!--</xsl:when>-->
+			<!--<xsl:when test=". = 'tb-rl' or . = 'tb'">-->
+				<!--<xsl:text>direction: rtl; </xsl:text>-->
+				<!--<xsl:text>writing-mode: tb-rl; </xsl:text>-->
+			<!--</xsl:when>-->
+			<!--<xsl:when test=". = 'tb-lr'">-->
+				<!--<xsl:text>direction: ltr; </xsl:text>-->
+				<!--<xsl:text>writing-mode: tb-lr; </xsl:text>-->
+			<!--</xsl:when>-->
+			<!--<xsl:when test=". = 'page'">-->
+				<!--<xsl:text>direction: inherit; </xsl:text>-->
+				<!--<xsl:text>writing-mode: inherit; </xsl:text>-->
+			<!--</xsl:when>-->
+			<!--<xsl:otherwise>-->
+				<!--<xsl:call-template name="copy-attr" />-->
+			<!--</xsl:otherwise>-->
+		<!--</xsl:choose>-->
 	</xsl:template>
   <xsl:template match="@style:direction" mode="CSS-attr">
 		<xsl:choose>

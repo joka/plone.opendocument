@@ -112,10 +112,10 @@
 		
 		<xsl:choose>
 			<xsl:when test="name()='style:page-layout'">
-				
-				<xsl:text>border-left: 1px solid gray;</xsl:text>
-				<xsl:text>border-right: 1px solid gray;</xsl:text>
-				<xsl:text>border-top: 1px solid gray;</xsl:text>
+				<!--better plone support-->
+				<!--<xsl:text>border-left: 1px solid gray;</xsl:text>-->
+				<!--<xsl:text>border-right: 1px solid gray;</xsl:text>-->
+				<!--<xsl:text>border-top: 1px solid gray;</xsl:text>-->
 				<xsl:text>border-bottom: 1px solid gray;</xsl:text>
 				
 				<xsl:if test="//office:text|//office:spreadsheet">

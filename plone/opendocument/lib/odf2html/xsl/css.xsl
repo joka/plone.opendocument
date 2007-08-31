@@ -39,7 +39,7 @@
 
 	<xsl:template name="document-styles">
 		<xsl:if test="not($param_no_css)">
-		<style>
+		<style type="text/css">
 			<xsl:call-template name="document-styles-css"/>
 		</style>
 		</xsl:if>
@@ -47,7 +47,8 @@
 
 	<xsl:template name="document-styles-css">
 		/* office:document-styles begin */
-		html
+    /*better plone support */
+		/*html
 		{
 			font-family: Verdana, SunSans-Regular, Sans-Serif;
 			font-size: <xsl:value-of select="$scale * 14" />pt;
@@ -70,7 +71,7 @@
 			{
 				position: absolute;
 			}
-		}
+		} */
 
         ul 
         {
@@ -92,8 +93,8 @@
 
         table
         {
-            /* Testfile letter.odt looks better without borders */
-		    #border: thin solid gray;  
+             /*Testfile letter.odt looks better without borders*/
+		  /* border: thin solid gray;  */
 			border-collapse: collapse;
 			empty-cells: show;
 			font-size: 10pt;
@@ -101,7 +102,7 @@
 		}
 		td
 		{
-			#border: thin solid gray;
+			/*order: thin solid gray;*/
 			vertical-align: bottom;
 		}
 		.cell_string
@@ -127,17 +128,22 @@
 		.page_table td {border: 0; padding-right:3em; vertical-align:top;}
 		
 		.page
-		{
+    { 
+     /*  better plone support */
+     /*
 			background-color: white;
 			border-left: 1px solid black;
 			border-right: 2px solid black;
-			border-top: 1px solid black;
-			border-bottom: 2px solid black;
+			border-top: 1px solid black; */
+			border-bottom: 1px solid black;
+			font-family: Verdana, SunSans-Regular, Sans-Serif;
+			font-size: <xsl:value-of select="$scale * 14" />pt;
 		}
 		
 		<xsl:if test="//office:spreadsheet">
 			<xsl:text>
-        /* testfile invoice.ods looks better without */      
+       /* testfile invoice.ods looks better without*/
+      /*
         td p
 		{
 			max-height: 2.5ex;
@@ -146,8 +152,7 @@
 		td p:hover
 		{
 			max-height: none;
-        }
-        */
+        }  */
     	    </xsl:text>
 		</xsl:if>
 

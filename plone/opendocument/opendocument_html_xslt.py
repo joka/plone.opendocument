@@ -9,7 +9,7 @@ from StringIO import StringIO
  
 from zope.interface import implements
 
-from plone.transforms.interfaces import ITransform
+from plone.transforms.interfaces import ITransform, IRankedTransform
 from plone.transforms.message import PloneMessageFactory as _
 from plone.transforms.transform import TransformResult  
 from plone.transforms.log import log
@@ -26,7 +26,7 @@ class OpendocumentHtmlXsltTransform(object):
     """
     XSL transform which transforms OpenDocument files into XHTML 
     """
-    implements(ITransform)
+    implements(ITransform, IRankedTransform)
     
     inputs = ('application/vnd.oasis.opendocument.text',
               'application/vnd.oasis.opendocument.text-template',
@@ -49,6 +49,8 @@ class OpendocumentHtmlXsltTransform(object):
         with XSL")
 
     available = False
+
+    rank = 1
 
     xsl_stylesheet = os.path.join(os.getcwd(), os.path.dirname(__file__),\
             'lib/odf2html/all-in-one.xsl')    
@@ -120,7 +122,10 @@ class OpendocumentHtmlXsltTransform(object):
                 stylesheetXML = etree.parse(self.xsl_stylesheet, parser)
                 xslt = etree.XSLT(stylesheetXML)
                 resultXML = xslt(contentXML, **self.xsl_stylesheet_param) 
-                resultXML.write(self.data)
+                docinfo =  u'<?xml version=\'1.0\' encoding=\'utf-8\'?>\
+                   \n<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">\n'       
+                self.data.write(docinfo.encode('utf-8'))
+                resultXML.write(self.data, pretty_print=True)
                 self.data.seek(0)      
                 #log non fatal errors and warnings
                 if parser.error_log:
