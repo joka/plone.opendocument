@@ -1,3 +1,8 @@
+1.September 2007
+---------------
+* list.xsl: added support for empty @style:num-format
+  test file tests/text/lists_06.odt
+
 30.August 2007
 -------------
 * attribute.xsl: commented out @style:writing-mode, propritary microsoft 

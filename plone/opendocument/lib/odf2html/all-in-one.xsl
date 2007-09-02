@@ -1987,7 +1987,6 @@
   <xsl:key name="listTypes" match="text:list-style" use="@style:name"/>
   <xsl:key name="stylesAssociated" match="style:style[*/@fo:margin-left]" use="@style:list-style-name"/>
   <xsl:template match="text:list-style">
-    <xsl:value-of select="$param_css_only"/> <xsl:text>ggggg</xsl:text>
 		
 		<xsl:if test="$CSS.debug=1">
 			<xsl:text>/* text:list-style '</xsl:text>
@@ -2097,6 +2096,8 @@
                 <xsl:when test="../@style:num-format='i'">lower-roman</xsl:when>
                 <xsl:when test="../@style:num-format='A'">upper-alpha</xsl:when>
                 <xsl:when test="../@style:num-format='a'">lower-alpha</xsl:when>
+                <!--Openoffice generates empty @style:num-format-->
+                <xsl:when test="../@style:num-format=''">none</xsl:when>
 				<xsl:otherwise>decimal</xsl:otherwise>
 			</xsl:choose>
 		<xsl:text>; </xsl:text>
