@@ -79,7 +79,7 @@ supported by common browsers (png, gif, jpeg) are converted to png.
 
 Working with big files can cause great memory assumption.
 Current ATFile don't support streaming. Also lxml don't support streaming.
-You can find some XML object models in python benchmark at 
+You can find some XML object models in python benchmarks: at 
 "XML Matters: Process XML in Python with ElementTree" by David Mertz
 http://www.ibm.com/developerworks/library/x-matters28/. 
 
