@@ -57,7 +57,7 @@ def makeViewable((imageName, imageContent)):
 
     raises IOError, ValueError
 
-    returns (imageName, imageContent) tuple or None
+    returns (imageName, imageContent) tuple or (None, None) tuple
     """
     viewable = ['PNG','GIF','JPEG']
 
@@ -86,10 +86,10 @@ def makeViewable((imageName, imageContent)):
             return (imageName_, imageContent_)
     except IOError, e:
         if str(e) == 'cannot identify image file':
-            return None
+            return (None, None)
         else:
             raise 
         
-    return None
+    return (None, None)
 
 

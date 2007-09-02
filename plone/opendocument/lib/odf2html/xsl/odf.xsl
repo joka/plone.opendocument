@@ -40,7 +40,7 @@
 
 	<xsl:template match="/office:document">
 		<xsl:if test="not($param_css_only)">
-		<html xmlns="http://www.w3.org/1999/xhtml">
+		<html   xmlns="http://www.w3.org/1999/xhtml">
       <head>
         <title />
 				<!-- meta must be first -->
@@ -49,8 +49,10 @@
 				<xsl:apply-templates select="office:document-styles"/>
 			</head>
 			<!-- body must be after head -->
-			<body>
-				<xsl:apply-templates select="office:document-content"/>
+      <body>
+         <div id="odf_document">
+           <xsl:apply-templates select="office:document-content"/>
+         </div>
 			</body>
 		</html>
 		</xsl:if>

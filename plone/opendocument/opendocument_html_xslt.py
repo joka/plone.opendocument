@@ -124,6 +124,7 @@ class OpendocumentHtmlXsltTransform(object):
                 resultXML = xslt(contentXML, **self.xsl_stylesheet_param) 
                 docinfo =  u'<?xml version=\'1.0\' encoding=\'utf-8\'?>\
                    \n<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">\n'       
+                self._addCssSelectorPrefix(resultXML,'#odf_document ') 
                 self.data.write(docinfo.encode('utf-8'))
                 resultXML.write(self.data, pretty_print=True)
                 self.data.seek(0)      
@@ -288,5 +289,17 @@ class OpendocumentHtmlXsltTransform(object):
                     continue
 
                 self.metadata[prefix + ':' + tag] = text
+    
+    def _addCssSelectorPrefix(self, htmlObject, selectorPrefix):
+      '''
+      This function takes the first style element of htmlObject (etree object) 
+      and adds the selectorPrefix (string) to every CSS selector.
+      '''
+      style = None
+      style = htmlObject.find('.//{http://www.w3.org/1999/xhtml}style')
+      if not style is None:
+        text =  style.text.replace('\n.', '\n' + selectorPrefix + '.')
+        style.text = text
+
 
 

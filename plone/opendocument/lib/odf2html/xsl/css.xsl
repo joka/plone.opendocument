@@ -73,13 +73,13 @@
 			}
 		} */
 
-        ul 
+        #odf_document ul 
         {
             /*Reset some browser default styles */
             margin:0;
         }
 
-        ul ul 
+        #odf_document ul ul 
         {
             /*Reset some browser default styles */
             padding:0;
@@ -91,7 +91,7 @@
             list-style-type:none;
         }
 
-        table
+        #odf_document table
         {
              /*Testfile letter.odt looks better without borders*/
 		  /* border: thin solid gray;  */
@@ -100,34 +100,34 @@
 			font-size: 10pt;
 			table-layout: fixed;
 		}
-		td
+	  #odf_document td
 		{
 			/*order: thin solid gray;*/
 			vertical-align: bottom;
 		}
-		.cell_string
+		#odf_document .cell_string
 		{
 			text-align: left;
 		}
-		.cell_time
+		#odf_document .cell_time
 		{
 			text-align: right;
 		}
-		p
+		#odf_document p
 		{
 			margin-top: 0;
 			margin-bottom: 0;
 		}
-		.page-break
+		#odf_document .page-break
 		{
 			margin: 1em;
 		}
 		
-		.page_table {border: 0;}
-		.page_table tr {border: 0;}
-		.page_table td {border: 0; padding-right:3em; vertical-align:top;}
+		#odf_document .page_table {border: 0;}
+		#odf_document .page_table tr {border: 0;}
+		#odf_document .page_table td {border: 0; padding-right:3em; vertical-align:top;}
 		
-		.page
+		#odf_document .page
     { 
      /*  better plone support */
      /*
@@ -144,12 +144,12 @@
 			<xsl:text>
        /* testfile invoice.ods looks better without*/
       /*
-        td p
+    #odf_document td p
 		{
 			max-height: 2.5ex;
 			overflow: hidden;
 		}
-		td p:hover
+		#odf_document td p:hover
 		{
 			max-height: none;
         }  */

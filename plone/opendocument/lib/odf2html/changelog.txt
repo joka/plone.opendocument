@@ -1,14 +1,16 @@
 30.August 2007
 -------------
+* attribute.xsl: commented out @style:writing-mode, propritary microsoft 
 * layout.xsl: added style:default-page-layout template stub to generate valid
-  CSS.
+              CSS.
   test file tests/commonUseCases/letter.odt
 * css.xsl: commented out html,body,.page styles for plone support
+*          document-styles templated, added type attribute
+           added #odf_document for better plone support
 * default.xsl: commented out style_standard_default template css styles for plone
-  support
-* css.xsl: document-styles templated, added type attribute
-* attribute.xsl: commented out @style:writing-mode, propritary microsoft 
+               support
 * odf.xsl: added title element to generate valid HTML
+           added div id="odf_document" element for better plone support
 
 03.August 2007
 -------------
