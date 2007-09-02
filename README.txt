@@ -2,8 +2,8 @@ plone.opendocument Package Readme
 =========================
 
 
-Overview
---------
+Introduction
+------------
 
 This package provides  XSL transformations for OpenDocument files for Plone.
 It works only with plone.transforms that substitutes PloneTransforms in Plone 3.5.
@@ -64,4 +64,22 @@ is you install path of plone.opendocument)
 
 
 .. _buildout: http://pypi.python.org/pypi/zc.buildout
+
+
+Limitations
+-----------
+
+This product works well with ODT and  ODS files. Not supported are footer,
+header, ole objects and internal links. ODP files are supported in a 
+simple way.
+
+Image files are supported except file formats that are not supported by PIL
+(http://www.pythonware.com/library/pil/handbook/). Image formats that are not
+supported by common browsers (png, gif, jpeg) are converted to png.
+
+Working with big files can cause great memory assumption.
+Current ATFile don't support streaming. Also lxml don't support streaming.
+You can find some XML object models in python benchmark at 
+"XML Matters: Process XML in Python with ElementTree" by David Mertz
+http://www.ibm.com/developerworks/library/x-matters28/. 
 
