@@ -207,16 +207,17 @@ class OpendocumentHtmlXsltTransform(object):
                     imageContent.seek(0)
                     fileContent.close()
                     #assert that the image is viewable with web browsers
-                    imageName_, imageContent = utils.makeViewable((imageName, imageContent))
+                    imageName_, imageContent_ = utils.makeViewable((imageName, imageContent))
                     if not imageName_:
                         self.errors = self.errors + u'''
                                          Image file '%s' could not be make viewable \
                                          with web browser.
                                          ''' % (imageName)   
-                        continue  
+                        imageName_ = imageName
+                        imageContent_ = imageContent
                     #store image                    
                     self._imageNames[imageName] = imageName_ 
-                    self.subobjects[imageName_] = imageContent
+                    self.subobjects[imageName_] = imageContent_
 
             dataZip.close()        
 
