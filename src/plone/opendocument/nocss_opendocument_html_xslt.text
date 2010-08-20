@@ -1,8 +1,8 @@
 
 Tests for nocss_opendocument_html_xslt transform
 
-                          .o
-First we test that it fulfills the ITransform interface: 
+                          
+First we test that it fullfills the ITransform interface: 
     
    >>> from plone.transforms.interfaces import ITransform
    >>> from plone.opendocument.nocss_opendocument_html_xslt import NocssOpendocumentHtmlXsltTransform

@@ -6,6 +6,9 @@ version = '0.1'
 setup(name='plone.opendocument',
       version=version,
       description="",
+      packages=find_packages('src', exclude=['ez_setup']),
+      package_dir = {'':'src'},
+      namespace_packages=['plone'],
       long_description="""Transform from Opendocument to HTML""",
       classifiers=[
         "License :: OSI Approved :: GNU General Public License (GPL)",
@@ -20,8 +23,6 @@ setup(name='plone.opendocument',
       author_email='plone-developers@lists.sourceforge.net',
       url='http://svn.plone.org/svn/collective/plone.opendocument',
       license='GPL',
-      packages=find_packages(exclude=['ez_setup']),
-      namespace_packages=['plone'],
       include_package_data=True,
       zip_safe=False,
       install_requires=[

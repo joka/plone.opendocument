@@ -76,7 +76,7 @@ class OpendocumentHtmlXsltTransform(object):
                 }
         self.data = tempfile.NamedTemporaryFile()
           
-    def transform(self, data):  
+    def transform(self, data, options=None):  
         '''
         Transforms data (OpenDocument file) to XHTML. It returns an
         TransformResult object.

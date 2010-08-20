@@ -17,7 +17,7 @@ Getting a test zip file and turn it into a generator:
     >>> data = zipfile.ZipFile(os.path.dirname(__file__) + ('/tests/input/testZip.zip'))
     >>> dataIterator = utils.zipIterator(data)
     >>> dataIterator
-    <generator object at ...>
+    <generator object zipIterator ...>
 
 Then we check that only files are iterated:
 
